@@ -1,0 +1,1901 @@
+import:
+    org.bukkit.event.entity.SpawnerSpawnEvent
+
+options:
+    C1: <##ff1c1c>
+    C2: <##ff5252>
+    C3: &7
+    C4: &c
+
+on load:
+    set {ORg::prefix} to "<tooltip:&f&l→ <##ff2d19>&nWelcome to OP Resort!&r%nl% &8• {@C3}&oopresort.minehut.gg%nl% &8• {@C3}&o/discord><suggest command:/discord>{@C1}&lOP RESORT&r &8»"
+    set {ORg::prefix::commandBlock} to "{@C1}&lOP RESORT&r &8»"
+    set {ORg::sound::good} to "entity.villager.yes"
+    set {ORg::sound::bad} to "entity.villager.no"
+
+
+
+on join:
+    wait 1 tick
+    if player is not op:
+        op player
+    send "&7&o[Server: Made %player% &7&oa server operator]"
+
+on player command send:
+    set {_u} to player's uuid
+    if ORadminPermission({_u}) = false:
+        set {_commands::*} to "addadmin@split@aa@split@skript:addadmin@split@skript:aa@split@adminmenu@split@am@split@skript:adminmenu@split@skript:am@split@removeadmin@split@ra@split@skript:removeadmin@split@skript:ra@split@commandspy@split@cms@split@skript:commandspy@split@skript:cms@split@lognbt@split@ln@split@skript:lognbt@split@skript:ln@split@resetserver@split@rs@split@skript:resetserver@split@skript:rs@split@config@split@cf@split@skript:config@split@skript:cf@split@setspawn@split@skript:setspawn" split at "@split@"
+        remove {_commands::*} from player command map
+
+on tab complete:
+    set {_u} to player's uuid
+    if event-string contains "/adminlist" or "/al":
+        loop rounded up size of {ORg::adminList::uuid::*} / 10 times:
+            add loop-value to {_t::*}
+        set tab completions for position 1 to {_t::*}
+    else if event-string contains "/removeadmin" or "/ra":
+        if ORadminPermission({_u}) = true:
+            set tab completions for position 1 to {ORg::adminList::player::*}
+    else if event-string contains "/commandspy" or "/cms":
+        if ORadminPermission({_u}) = true:
+            set tab completions for position 1 to "player@split@p@split@commandblock@split@cb@split@console@split@c@split@commandblocklimit@split@cbl" split at "@split@"
+            if tab arg-1 = "player" or "p" or "commandblock" or "cb" or "console" or "c":
+                set tab completions for position 2 to "true@split@t@split@false@split@f" split at "@split@"
+            else if tab arg-1 = "commandblocklimit" or "cbl":
+                set tab completions for position 2 to "[<integer>]"
+    else if event-string contains "/lognbt" or "/ln":
+        if ORadminPermission({_u}) = true:
+            set tab completions for position 1 to "list@split@l@split@give@split@g" split at "@split@"
+            if tab arg-1 = "list" or "l":
+                set tab completions for position 2 to "condensed@split@c@split@dump@split@d@split@item@split@i" split at "@split@"
+                if tab arg-2 = "condensed" or "c" or "dump" or "d" or "item" or "i":
+                    loop all players:
+                        add loop-value to {_t::*}
+                    add "all" and "a" to {_t::*}
+                    set tab completions for position 3 to {_t::*}
+                    delete {_t::*}
+                    if tab arg-3 = "all" or "a":
+                        loop rounded up size of {ORg::logNbt::recent::*} / 10 times:
+                            add loop-value to {_t::*}
+                        set tab completions for position 4 to {_t::*}
+                    else:
+                        set {_player} to tab arg-3 parsed as offline player
+                        set {_u} to uuid of {_player}
+                        if {ORl::%{_u}%::logNbt::recent::*} is set:
+                            loop rounded up size of {ORl::%{_u}%::logNbt::recent::*} / 10 times:
+                                add loop-value to {_t::*}
+                            set tab completions for position 4 to {_t::*}
+            else if tab arg-1 = "give" or "g":
+                loop all players:
+                    add loop-value to {_t::*}
+                add "all" and "a" to {_t::*}
+                set tab completions for position 2 to {_t::*}
+                delete {_t::*}
+                if tab arg-2 = "all" or "a":
+                    loop size of {ORg::logNbt::recent::*} times:
+                        add loop-value to {_t::*}
+                    set tab completions for position 3 to {_t::*}
+                else:
+                    set {_player} to tab arg-2 parsed as offline player
+                    set {_u} to uuid of {_player}
+                    if {ORl::%{_u}%::logNbt::recent::*} is set:
+                        loop size of {ORl::%{_u}%::logNbt::recent::*} times:
+                            add loop-value to {_t::*}
+                        set tab completions for position 3 to {_t::*}
+    else if event-string contains "/resetserver" or "/rs":
+        if ORadminPermission({_u}) = true:
+            set {_t::*} to "wait@split@w@split@noClear@split@nc@split@noGamemode@split@ng@split@noMisc@split@nm@split@noNewLocation@split@nnl@split@noPlayerData@split@npd@split@noTeleport@split@nt" split at "@split@"
+            set tab completions for position 1 to {_t::*}
+            if first character of tab arg-1 != "-":
+                if last character of tab arg-1 = "-":
+                    if last 2 characters of tab arg-1 != "--":
+                        set {_p::*} to tab arg-1 split at "-"
+                        loop size of {_t::*} times:
+                            if {_p::*} does not contain {_t::%loop-value%}:
+                                set {_t2::%loop-value%} to "%tab arg-1%%{_t::%loop-value%}%"
+                                set tab completions for position 1 to {_t2::*}
+    else if event-string contains "/discord" or "/d":
+        if ORadminPermission({_u}) = true:
+            loop all players:
+                add loop-player to {_t::*}
+            add "all" and "a" to {_t::*}
+            set tab completions for position 1 to {_t::*}
+    else if event-string contains "/config" or "/cf":
+        if ORadminPermission({_u}) = true:
+            set tab completions for position 1 to "commandfilter@split@cf@split@spawnerfix@split@sf" split at "@split@"
+            if tab arg-1 = "commandfilter" or "cf":
+                set tab completions for position 2 to "add@split@a@split@remove@split@rm@split@set@split@s@split@modify@split@m@split@reset@split@rs@split@list@split@l" split at "@split@"
+                if tab arg-2 = "remove" or "rm" or "set" or "s":
+                    loop size of {ORg::blockedCommand::hash::*} times:
+                        add loop-value to {_t::*}
+                    set tab completions for position 3 to {_t::*}
+                else if tab arg-2 = "modify" or "m":
+                    set tab completions for position 3 to "hash@split@permissionmessage@split@pm" split at "@split@"
+                    if tab arg-3 = "hash" or "h" or "permissionmessage" or "pm":
+                        loop size of {ORg::blockedCommand::hash::*} times:
+                            add loop-value to {_t::*}
+                        set tab completions for position 4 to {_t::*}
+                else if tab arg-2 = "list" or "l":
+                    loop rounded up size of {ORg::blockedCommand::hash::*} / 10 times:
+                        add loop-value to {_t::*}
+                    set tab completions for position 3 to {_t::*}
+            else if tab arg-1 = "spawnerfix" or "sf":
+                set tab completions for position 2 to "get", "g", "set" and "s" split at "@split@"
+                if tab arg-2 is "set" or "s":
+                    set tab completions for position 3 to "spawnerTickingRate@split@str@split@spawnerMaxEntities@split@sme" split at "@split@"
+                    set tab completions for position 4 to "1"
+                else if tab arg-2 is "get" or "g":
+                    set tab completions for position 3 to "spawnerTickingRate@split@str@split@spawnerMaxEntities@split@sme" split at "@split@"
+    else if event-string contains "/spawn":
+        if ORadminPermission({_u}) = true:
+            set {_allPlayers::*} to all players
+            add "all" and "a" to {_allPlayers::*}
+            set tab completions for position 1 to {_allPlayers::*}
+    
+
+
+command /addadmin [<offline player>]:
+    aliases: /aa
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            if arg-1 is set:
+                if {ORg::adminList::uuid::*} does not contain arg-1's uuid:
+                    add arg-1's uuid to {ORg::adminList::uuid::*}
+                    add "%arg-1%" to {ORg::adminList::player::*}
+                    set {ORl::%arg-1%::lastUuid} to arg-1's uuid
+                    set {ORg::adminList::sortedPlayer::*} to sorted {ORg::adminList::player::*}
+                    update command map
+                    send formatted "%{ORg::prefix}% {@C2}%arg-1%{@C3} has been added to the admin list."
+                    if {_u} = "console":
+                        send formatted "%{ORg::prefix}% {@C3}You have been added to the admin list by {@C2}%{_u}%{@C3}." to arg-1
+                    else:
+                        send formatted "%{ORg::prefix}% {@C3}You have been added to the admin list by {@C2}%player%{@C3}." to arg-1
+                    play sound {ORg::sound::good}
+                    play sound {ORg::sound::good} to arg-1
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}This player is already on the admin list."
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /addadmin <(player)>"
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+on join:
+    set {_u} to player's uuid
+    if ORadminPermission({_u}) = true:
+        if {ORg::adminList::player::*} does not contain player:
+            loop size of {ORg::adminList::uuid::*} times:
+                if {ORg::adminList::uuid::%loop-value%} = {_u}:
+                    set {ORl::%player%::lastUuid} to {_u}
+                    set {ORg::adminList::player::%loop-value%} to player
+                    set {ORg::adminList::sortedPlayer::*} to sorted {ORg::adminList::player::*}
+
+
+command /removeadmin [<offline player>]:
+    aliases: /ra
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            if arg-1 is set:
+                if {ORg::adminList::uuid::*} contains arg-1's uuid:
+                    close arg-1's inventory
+                    remove arg-1's uuid from {ORg::adminList::uuid::*}
+                    set {ORg::adminList::uuid::*} to ORremoveStringListHole({ORg::adminList::uuid::*})
+                    remove "%arg-1%" from {ORg::adminList::player::*}
+                    set {ORg::adminList::player::*} to ORremoveStringListHole({ORg::adminList::player::*})
+                    delete {ORl::%arg-1%::lastUuid}
+                    set {ORg::adminList::sortedPlayer::*} to sorted {ORg::adminList::player::*}
+                    update command map
+                    send formatted "%{ORg::prefix}% {@C2}%arg-1%{@C3} has been removed from the admin list."
+                    if {_u} = "console":
+                        send formatted "%{ORg::prefix}% {@C3}You have been removed from the admin list by {@C2}%{_u}%{@C3}." to arg-1
+                    else:
+                        send formatted "%{ORg::prefix}% {@C3}You have been removed from the admin list by {@C2}%player%{@C3}." to arg-1
+                    play sound {ORg::sound::good}
+                    if player != arg-1:
+                        play sound {ORg::sound::bad} to arg-1
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}This player is not on the admin list."
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /removeadmin <(player)>"
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+
+command /adminlist [<integer>]:
+    aliases: /al
+    trigger:
+        set {_p} to 1
+        if arg-1 is set:
+            if arg-1 is between 1 and rounded up size of {ORg::adminList::uuid::*} / 10:
+                set {_p} to arg-1
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /adminlist [<1-%rounded up size of {ORg::adminList::uuid::*} / 10%{@C4}>]"
+                stop
+        send formatted "%{ORg::prefix}% {@C3}Admin list <tooltip:Page %{_p}% of %rounded up size of {ORg::adminList::uuid::*} / 10%><suggest command:/adminlist %{_p}%>&f(%{_p}%&f/%rounded up size of {ORg::adminList::uuid::*} / 10%&f)&r{@C3}:"
+        loop 10 times:
+            set {_t} to loop-value + 10 * ({_p} - 1)
+            if {ORg::adminList::uuid::%{_t}%} is set:
+                send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##ff402e>&nPlayer Info&r%nl% &8• {@C3}UUID: %{ORl::%{ORg::adminList::sortedPlayer::%{_t}%}%::lastUuid}%%nl% &8• {@C3}Click to remove player from admin list><suggest command:/removeadmin %{ORg::adminList::sortedPlayer::%{_t}%}%>{@C2}%{ORg::adminList::sortedPlayer::%{_t}%}%"
+        play sound {ORg::sound::good}
+
+
+command /adminmenu:
+    aliases: /am
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            ORguiAdminMenu(player)
+            send formatted "%{ORg::prefix}% {@C3}Opening admin menu:"
+            play sound {ORg::sound::good}
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+on load:
+    set {ORg::gui::adminMenu::rows} to 6
+    set {ORg::gui::adminMenu::name} to "<##ff0000>&lOP RESORT&0 | <##ff2626>Admin Menu"
+    set {ORg::gui::adminMenu::commandSpy::player::slot} to 20
+    set {ORg::gui::adminMenu::commandSpy::player::item::inactive} to oak sign named "&f&l→ <##ffd530>&n/commandspy player&7 | <##ffd530>&o(/cms p)" with lore " &8• {@C3}Toggles commandspy in chat for players", " &8• {@C3}Click chat message to teleport" and "   {@C3}to player or copy command"
+    set {ORg::gui::adminMenu::commandSpy::player::item::active} to oak sign of mending named "&f&l→ <##ffd530>&n/commandspy player&7 | <##ffd530>&o(/cms p)" with lore " &8• {@C3}Toggles commandspy in chat for players", " &8• {@C3}Click chat message to teleport" and "   {@C3}to player or copy command" with all flags hidden
+    set {ORg::gui::adminMenu::commandSpy::commandBlock::slot} to 29
+    set {ORg::gui::adminMenu::commandSpy::commandBlock::item::inactive} to command block named "&f&l→ <##ffd530>&n/commandspy commandblock&7 | <##ffd530>&o(/cms cb)" with lore " &8• {@C3}Toggles commandspy in chat for command blocks", " &8• {@C3}Click chat message to destroy command" and "   {@C3}block or copy command"
+    set {ORg::gui::adminMenu::commandSpy::commandBlock::item::active} to command block of mending named "&f&l→ <##ffd530>&n/commandspy commandblock&7 | <##ffd530>&o(/cms cb)" with lore " &8• {@C3}Toggles commandspy in chat for command blocks", " &8• {@C3}Click chat message to destroy command block" and "   {@C3}or copy command" with all flags hidden
+    set {ORg::gui::adminMenu::commandSpy::console::slot} to 38
+    set {ORg::gui::adminMenu::commandSpy::console::item::inactive} to repeating command block named "&f&l→ <##ffd530>&n/commandspy console&7 | <##ffd530>&o(/cms c)" with lore " &8• {@C3}Toggles commandspy in chat for console"
+    set {ORg::gui::adminMenu::commandSpy::console::item::active} to repeating command block of mending named "&f&l→ <##ffd530>&n/commandspy console&7 | <##ffd530>&o(/cms c)" with lore " &8• {@C3}Toggles commandspy in chat for console" with all flags hidden
+    set {ORg::gui::adminMenu::commandSpy::commandBlockLimit::slot} to 47
+    set {ORg::gui::adminMenu::commandSpy::commandBlockLimit::item} to chain command block named "&f&l→ <##ffd530>&n/commandspy commandblocklimit <input>&7 | <##ffd530>&o(/cms cbl [<arg-1>])" with lore " &8• {@C3}Sets the max amount of command spy command", "   {@C3}block messages sent per second to the player" and " &8• {@C3}Command block command spy must be active" and "   {@C3}for this option to matter"
+    set {ORg::gui::adminMenu::logNbt::listItemAll::slot} to 21
+    set {ORg::gui::adminMenu::logNbt::listItemAll::item} to filled map named "&f&l→ <##828282>&n/lognbt list item all&7 | <##828282>&o(/ln l i a)" with lore " &8• {@C3}Shows a list of items right-clicked", "   {@C3}by players", " &8• {@C3}Click an item in the GUI to" and "   {@C3}receive it" with all flags hidden
+    set {ORg::gui::adminMenu::logNbt::listItemPlayer::slot} to 30
+    set {ORg::gui::adminMenu::logNbt::listItemPlayer::item} to paper named "&f&l→ <##828282>&n/lognbt list item <input>&7 | <##828282>&o(/ln l i <arg-1>)" with lore " &8• {@C3}Shows a list of items right-clicked" and "   {@C3}by a specified player"
+    set {ORg::gui::adminMenu::discord::slot} to 22
+    set {ORg::gui::adminMenu::discord::item} to heart of the sea named "&f&l→ <##9b87ff>&n/discord" with lore " &8• {@C3}Sends the Discord invite link in chat"
+    set {ORg::gui::adminMenu::discord::input::slot} to 31
+    set {ORg::gui::adminMenu::discord::input::item} to ender pearl named "&f&l→ <##9b87ff>&n/discord <input>" with lore " &8• {@C3}Sends the Discord invite link to player(s)" and "  {@C3} through chat based on the input"
+    set {ORg::gui::adminMenu::resetServer::slot} to 23
+    set {ORg::gui::adminMenu::resetServer::item} to barrier named "&f&l→ <##ff8036>&n/resetserver&7 | <##ff8036>&o(/rs)" with lore " &8• {@C3}Does a bunch of things including resetting", "   {@C3}some player data, spawn location, gamerules, misc." and " &8• {@C3}This does not reset the world, just changes location"
+    set {ORg::gui::adminMenu::resetServer::input::slot} to 32
+    set {ORg::gui::adminMenu::resetServer::input::item} to structure void named "&f&l→ <##ff8036>&n/resetserver <input>&7 | <##ff8036>&o(/rs [<arg-1>])" with lore " &8• {@C3}Same as /resetserver, only that some", "   {@C3}mechanics are not executed", " &8• {@C3}Availavle options are wait, noClear, noGamemode", "   {@C3}noMisc, noNewLocation and noPlayerData.", " &8• {@C3}For multiple options, seperate with a ""-""" and "   {@C3}Ex: /resetserver noClear-noTeleport"
+    set {ORg::gui::adminMenu::addAdmin::slot} to 24
+    set {ORg::gui::adminMenu::addAdmin::item} to lime standing banner named "&f&l→ <##ff4d36>&n/addadmin <input>&7 | <##ff4d36>&o(/aa <arg-1>)" with lore " &8• {@C3}Adds a player to the admin list"
+    set {ORg::gui::adminMenu::removeAdmin::slot} to 33
+    set {ORg::gui::adminMenu::removeAdmin::item} to red standing banner named "&f&l→ <##ff4d36>&n/removeadmin <input>&7 | <##ff4d36>&o(/ra <arg-1>)" with lore " &8• {@C3}Removes a player from the admin list"
+    set {ORg::gui::adminMenu::adminList::slot} to 42
+    set {ORg::gui::adminMenu::adminList::item} to knowledge book named "&f&l→ <##ff4d36>&n/adminlist <input>&7 | <##ff4d36>&o(/al <arg-1>)" with lore " &8• {@C3}Sends the inputted page number of" and "   {@C3}the admin list in chat"
+    delete {ORg::gui::adminMenu::placeHolder::*}
+    set {ORg::gui::adminMenu::placeHolder::1} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::2} to yellow dye named "&f&l↓ <##ffcc00>&lCOMMAND SPY &f&l↓"
+    set {ORg::gui::adminMenu::placeHolder::3} to gray dye named "&f&l↓ <##787878>&lLOG NBT &f&l↓"
+    set {ORg::gui::adminMenu::placeHolder::4} to cyan dye named "&f&l↓ <##7559ff>&lDISCORD &f&l↓"
+    set {ORg::gui::adminMenu::placeHolder::5} to orange dye named "&f&l↓ <##ff5e00>&lSERVER &f&l↓"
+    set {ORg::gui::adminMenu::placeHolder::6} to red dye named "&f&l↓ <##ff1e00>&lADMIN MANAGEMENT &f&l↓"
+    set {ORg::gui::adminMenu::placeHolder::9} to gray stained glass pane named " "
+    loop 9 times:
+        set {ORg::gui::adminMenu::placeHolder::%9 + loop-value%} to black stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::19} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::27} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::28} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::36} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::37} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::45} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::46} to gray stained glass pane named " "
+    set {ORg::gui::adminMenu::placeHolder::54} to gray stained glass pane named " "
+
+on inventory click:
+    set {_u} to player's uuid
+    if event-inventory = metadata tag "ORl::%{_u}%::gui::adminMenu" of player:
+        cancel event
+        set {_l::*} to "player", "commandBlock" and "console"
+        loop size of {_l::*} times:
+            if index of event-slot = {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::slot} - 1:
+                make player execute command "/commandspy %{_l::%loop-value%}%"
+                set slot {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of player to {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::item::inactive}
+                if {ORl::%{_u}%::admin::commandSpy::%{_l::%loop-value%}%} = true:
+                    set slot {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of player to {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::item::active}
+        if index of event-slot = {ORg::gui::adminMenu::commandSpy::commandBlockLimit::slot} - 1:
+            ORguiAdminMenuHelper1(player, "commandBlockLimit", "{@C3}Input an {@C2}integer{@C3} greater than or equal to 1. Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::logNbt::slot} - 1:
+            make player execute command "/lognbt list item all"
+        else if index of event-slot = {ORg::gui::adminMenu::logNbt::recent::slot} - 1:
+            ORguiAdminMenuHelper1(player, "listItemPlayer", "{@C3}Input a {@C2}player name{@C3}. Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::discord::slot} - 1:
+            make player execute command "/discord"
+        else if index of event-slot = {ORg::gui::adminMenu::discord::input::slot} - 1:
+            ORguiAdminMenuHelper1(player, "discord", "{@C3}Input a {@C2}player name{@C3}. Type in ""{@C2}all{@C3}"" to send to all players. Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::resetServer::slot} - 1:
+            make player execute command "/resetserver"
+        else if index of event-slot = {ORg::gui::adminMenu::resetServer::input::slot} - 1:
+            ORguiAdminMenuHelper1(player, "resetServer", "{@C3}Input a {@C2}hash{@C3} for reset server (Ex: ""{@C2}wait-noClear-noGamemode-noMisc-noNewLocation-noPlayerData-noTeleport{@C3}""). Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::addAdmin::slot} - 1:
+            ORguiAdminMenuHelper1(player, "addAdmin", "{@C3}Input a {@C2}player name{@C3}. Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::removeAdmin::slot} - 1:
+            ORguiAdminMenuHelper1(player, "removeAdmin", "{@C3}Input a {@C2}player name{@C3}. Type in {@C2}@cancel@{@C3} to cancel:")
+        else if index of event-slot = {ORg::gui::adminMenu::adminList::slot} - 1:
+            ORguiAdminMenuHelper1(player, "adminList", "{@C3}Input an {@C2}integer{@C3} between 1 and %rounded up size of {ORg::adminList::uuid::*} / 10%{@C3}. Type in {@C2}@cancel@{@C3} to cancel:")
+
+on chat:
+    set {_u} to player's uuid
+    if {ORl::%{_u}%::chatInput::adminMenu::type} is set:
+        send formatted "%{ORg::prefix}% {@C3}Input: &f%uncolored message%"
+        if message = "@cancel@":
+            ORguiAdminMenu(player)
+            play sound {ORg::sound::good}
+        if {ORl::%{_u}%::chatInput::adminMenu::type} = "commandBlockLimit":
+            if mod(message parsed as integer, 1) = 0:
+                if message parsed as integer >= 1:
+                    make player execute command "/commandspy commandBlockLimit %message parsed as integer%"
+                    ORguiAdminMenu(player)
+                else:
+                    ORguiAdminMenuHelper2(player)
+            else:
+                ORguiAdminMenuHelper2(player)
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "listItemPlayer":
+            if message parsed as player is set:
+                make player execute command "/lognbt list item %message parsed as player%"
+            else:
+                ORguiAdminMenuHelper2(player)
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "discord":
+            if message parsed as player is set:
+                make player execute command "/discord %message parsed as player%"
+                ORguiAdminMenu(player)
+            else if message = "all" or "a":
+                make player execute command "/discord %message%"
+                ORguiAdminMenu(player)
+            else:
+                ORguiAdminMenuHelper2(player)
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "resetServer":
+            make player execute command "/resetserver %message%"
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "addAdmin":
+            if message parsed as player is set:
+                make player execute command "/addadmin %message parsed as player%"
+                ORguiAdminMenu(player)
+            else:
+                ORguiAdminMenuHelper2(player)
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "removeAdmin":
+            if message parsed as player is set:
+                make player execute command "/removeadmin %message parsed as player%"
+                ORguiAdminMenu(player)
+            else:
+                ORguiAdminMenuHelper2(player)
+        else if {ORl::%{_u}%::chatInput::adminMenu::type} = "adminList":
+            if mod(message parsed as integer, 1) = 0:
+                if message parsed as integer is between 1 and rounded up size of {ORg::adminList::uuid::*} / 10:
+                    make player execute command "/adminlist %message parsed as integer%"
+                    ORguiAdminMenu(player)
+                else:
+                    ORguiAdminMenuHelper2(player)
+            else:
+                ORguiAdminMenuHelper2(player)
+        cancel event
+
+on quit:
+    if {ORl::%{_u}%::chatInput::adminMenu::type} is set:
+        delete {ORl::%{_u}%::chatInput::adminMenu::*}
+
+function ORguiAdminMenu(p: player):
+    set {_u} to {_p}'s uuid
+    if ORadminPermission({_u}) = true:
+        set metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to chest inventory with {ORg::gui::adminMenu::rows} rows named {ORg::gui::adminMenu::name}
+        set {_l::*} to "player", "commandBlock" and "console"
+        loop size of {_l::*} times:
+            set slot {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::item::inactive}
+            if {ORl::%{_u}%::admin::commandSpy::%{_l::%loop-value%}%} = true:
+                set slot {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::commandSpy::%{_l::%loop-value%}%::item::active}
+        set slot {ORg::gui::adminMenu::commandSpy::commandBlockLimit::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::commandSpy::commandBlockLimit::item}
+        set slot {ORg::gui::adminMenu::logNbt::listItemAll::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::logNbt::listItemAll::item}
+        set slot {ORg::gui::adminMenu::logNbt::listItemPlayer::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::logNbt::listItemPlayer::item}
+        set slot {ORg::gui::adminMenu::discord::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::discord::item}
+        set slot {ORg::gui::adminMenu::discord::input::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::discord::input::item}
+        set slot {ORg::gui::adminMenu::resetServer::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::resetServer::item}
+        set slot {ORg::gui::adminMenu::resetServer::input::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::resetServer::input::item}
+        set slot {ORg::gui::adminMenu::addAdmin::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::addAdmin::item}
+        set slot {ORg::gui::adminMenu::removeAdmin::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::removeAdmin::item}
+        set slot {ORg::gui::adminMenu::adminList::slot} - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::adminList::item}
+        loop 54 times:
+            if {ORg::gui::adminMenu::placeHolder::%loop-value%} is set:
+                set slot (loop-value) - 1 of metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {ORg::gui::adminMenu::placeHolder::%loop-value%}
+        open metadata tag "ORl::%{_u}%::gui::adminMenu" of {_p} to {_p}
+        delete {ORl::%{_u}%::chatInput::adminMenu::*}
+
+function ORguiAdminMenuHelper1(p: player, t: string, m: string):
+    set {_u} to {_p}'s uuid
+    set {ORl::%{_u}%::chatInput::adminMenu::type} to {_t}
+    set {ORl::%{_u}%::chatInput::adminMenu::message} to {_m}
+    close {_p}'s inventory
+    send formatted "%{ORg::prefix}% %{_m}%" to {_p}
+    play sound {ORg::sound::good} to {_p}
+
+function ORguiAdminMenuHelper2(p: player):
+    set {_u} to {_p}'s uuid
+    send formatted "%{ORg::prefix}% {@C3}Incorrect input. %{ORl::%{_u}%::chatInput::adminMenu::message}%" to {_p}
+    play sound {ORg::sound::bad} to {_p}
+
+
+command /commandspy [<string>] [<string>]:
+    aliases: /cms
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            if arg-1 is set:
+                if arg-1 = "player" or "p" or "commandblock" or "cb" or "console" or "c":
+                    if arg-1 = "player" or "p":
+                        set {_id} to "player"
+                        set {_d1} to "player"
+                        set {_d2} to "players"
+                    else if arg-1 = "commandblock" or "cb":
+                        set {_id} to "commandBlock"
+                        set {_d1} to "command block"
+                        set {_d2} to "command blocks"
+                        if {ORl::%{_u}%::admin::commandSpy::commandBlockLimit} is not set:
+                            set {ORl::%{_u}%::admin::commandSpy::commandBlockLimit} to 3
+                    else:
+                        set {_id} to "console"
+                        set {_d1} to "console"
+                        set {_d2} to "console"
+                    set {_b} to true
+                    if {ORl::%{_u}%::admin::commandSpy::%{_id}%} = true:
+                        set {_b} to false
+                    if arg-2 is set:
+                        if arg-2 = "true" or "t":
+                            set {_b} to true
+                        else if arg-2 = "false" or "f":
+                            set {_b} to false
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy <%{_d1}%{@C3}> [<true/false>]"
+                            stop
+                    set {ORl::%{_u}%::admin::commandSpy::%{_id}%} to {_b}
+                    send formatted "%{ORg::prefix}% {@C3}Commandspy for {@C2}%{_d2}%{@C3} set to {@C2}%{_b}%{@C3}."
+                    play sound {ORg::sound::good}
+                else if arg-1 = "commandblocklimit" or "cbl":
+                    if arg-2 is set:
+                        if arg-2 parsed as integer is an integer:
+                            if arg-2 parsed as integer >= 0:
+                                set {ORl::%{_u}%::admin::commandSpy::commandBlockLimit} to arg-2 parsed as integer
+                                send formatted "%{ORg::prefix}% {@C3}Command block commands per second limit set to {@C2}%{ORl::%{_u}%::admin::commandSpy::commandBlockLimit}%{@C3}."
+                                play sound {ORg::sound::good}
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}You must input a command block commands per second limit above 0."
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy <commandblocklimit> [<integer>]"
+                    else:
+                        send formatted "%{ORg::prefix}% {@C3}Your current command block commands per second limit is {@C2}%{ORl::%{_u}%::admin::commandSpy::commandBlockLimit}%{@C3}."
+                        play sound {ORg::sound::good}
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy <player/commandblock/console/commandblocklimit>"
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy <player/commandblock/console/commandblocklimit>"
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+on command:
+    if sender = command block or chain command block or repeating command block or command minecart:
+        if sender = command block or chain command block or repeating command block:
+            if {ORg::commandSpy::recentCommandBlocks::*} contains "%rounded down x-coordinate of event-block%, %rounded down y-coordinate of event-block%, %rounded down z-coordinate of event-block% in ""%event-block's world%""":
+                stop
+        else if sender = command minecart:
+            if {ORg::commandSpy::recentCommandBlocks::*} contains "%rounded down x-coordinate of event-entity%, %rounded down y-coordinate of event-entity%, %rounded down z-coordinate of event-entity% in ""%event-entity's world%""":
+                stop
+    loop all players:
+        set {_u} to loop-player's uuid
+        if ORadminPermission({_u}) = true:
+            if {ORl::%{_u}%::admin::commandSpy::player} = true:
+                add loop-player to {_commandSpy::player::*}
+                set {_check} to true
+            if {ORl::%{_u}%::admin::commandSpy::commandBlock} = true:
+                add loop-player to {_commandSpy::commandBlock::*}
+                set {_check} to true
+            if {ORl::%{_u}%::admin::commandSpy::console} = true:
+                add loop-player to {_commandSpy::console::*}
+                set {_check} to true
+    if {_check} is not set:
+        stop
+    if sender = player:
+        loop size of {_commandSpy::player::*} times:
+            if player != {_commandSpy::player::%loop-value%}:
+                send formatted "<tooltip:&f&l→ <##ffd414>&nPlayer Info&r%nl% &8• {@C3}UUID: %player's uuid%%nl% &8• {@C3}Location: %rounded down x-coordinate of player%, %rounded down y-coordinate of player%, %rounded down z-coordinate of player% in ""%player's world%""%nl% &8• {@C3}Click to teleport to player><run command:/tp %player%>{@C3}%player%{@C3}&r{@C3}: <tooltip:&f&l↓ <##17ff8b>Click to Copy &f&l↓><suggest command:/%full command%>{@C3}/%full command%" to {_commandSpy::player::%loop-value%}
+    else if sender = command block or chain command block or repeating command block or command minecart:
+        if sender = command block or chain command block or repeating command block:
+            if sender = command block:
+                set {_d} to "Command Block*"
+            else if sender = chain command block:
+                set {_d} to "Chain CB*"
+            else if sender = repeating command block:
+                set {_d} to "Repeating CB*"
+            if "%event-block's world%" = "world":
+                set {_w} to "overworld"
+            else if "%event-block's world%" = "world_nether":
+                set {_w} to "the_nether"
+            else if "%event-block's world%" = "world_the_end":
+                set {_w} to "the_end"
+            set {_message} to "<tooltip:&f&l→ <##ffd414>&nCommand Block Info&r%nl% &8• {@C3}Location: %rounded down x-coordinate of event-block%, %rounded down y-coordinate of event-block%, %rounded down z-coordinate of event-block% in ""%event-block's world%""%nl% &8• {@C3}Click to remove command block><run command:/execute in %{_w}% run setblock %rounded down x-coordinate of event-block% %rounded down y-coordinate of event-block% %rounded down z-coordinate of event-block% air>{@C3}%{_d}%&r{@C3}: <tooltip:&f&l↓ <##17ff8b>Click to Copy &f&l↓><suggest command:/%full command%>/%full command%"
+            add "%rounded down x-coordinate of event-block%, %rounded down y-coordinate of event-block%, %rounded down z-coordinate of event-block% in ""%event-block's world%""" to {ORg::commandSpy::recentCommandBlocks::*}
+        else if sender = command minecart:
+            if "%event-entity's world%" = "world":
+                set {_w} to "overworld"
+            else if "%event-entity's world%" = "world_nether":
+                set {_w} to "the_nether"
+            else if "%event-entity's world%" = "world_the_end":
+                set {_w} to "the_end"
+            set {_message} to "<tooltip:&f&l→ <##ffd414>&nCommand Minecart Info&r%nl% &8• {@C3}Location: %rounded down x-coordinate of event-entity%, %rounded down y-coordinate of event-entity%, %rounded down z-coordinate of event-entity% in ""%event-entity's world%""%nl% &8• {@C3}Click to remove command minecart><run command:/execute in %{_w}% run execute positioned %x-coordinate of event-entity% %y-coordinate of event-entity% %z-coordinate of event-entity% run kill @e[type=command_block_minecart,distance=..1]>{@C3}Command Minecart*&r{@C3}: <tooltip:&f&l↓ <##17ff8b>Click to Copy &f&l↓><suggest command:/%full command%>/%full command%"
+            add "%rounded down x-coordinate of event-entity%, %rounded down y-coordinate of event-entity%, %rounded down z-coordinate of event-entity% in ""%event-entity's world%""" to {ORg::commandSpy::recentCommandBlocks::*}
+        loop size of {_commandSpy::commandBlock::*} times:
+            set {_u} to uuid of {_commandSpy::commandBlock::%loop-value%}
+            if {ORl::%{_u}%::admin::commandSpy::commandBlockLimit} <= {ORl::%{_u}%::admin::commandSpy::commandBlockLimit::counter}:
+                stop
+            send formatted {_message} to {_commandSpy::commandBlock::%loop-value%}
+            add 1 to {ORl::%{_u}%::admin::commandSpy::commandBlockLimit::counter}
+    else if sender = console:
+        loop size of {_commandSpy::console::*} times:
+            send formatted "{@C3}Console*&r{@C3}: <tooltip:&f&l↓ <##17ff8b>Click to Copy &f&l↓><suggest command:/%full command%>/%full command%" to {_commandSpy::console::%loop-value%}
+
+every second:
+    delete {ORg::commandSpy::recentCommandBlocks::*}
+    loop all players:
+        set {_u} to loop-player's uuid
+        if ORadminPermission({_u}) = true:
+            set {ORl::%{_u}%::admin::commandSpy::commandBlockLimit::counter} to 0
+
+
+command /lognbt [<string>] [<string>] [<string>] [<string>]:
+    aliases: /ln
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            if arg-1 is not set:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt <list/give>"
+            else if arg-1 = "list" or "l":
+                if arg-2 is set:
+                    if arg-2 = "condensed" or "c":
+                        set {_style} to "condensed"
+                    else if arg-2 = "dump" or "d":
+                        set {_style} to "dump"
+                    else if arg-2 = "item" or "i":
+                        set {_style} to "item"
+                    else:
+                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt list <condensed/dump/item>"
+                        stop
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt list <condensed/dump/item>"
+                    stop
+                if arg-3 is set:
+                    if arg-3 = "all" or "a":
+                        if {ORg::logNbt::recent::*} is set:
+                            set {_p} to 1
+                            if arg-4 is set:
+                                set {_arg-4} to arg-4 parsed as integer
+                                if {_arg-4} is between 1 and rounded up size of {ORg::logNbt::recent::*} / 10:
+                                    set {_p} to {_arg-4}
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt list %{_style}% all [<1-%rounded up size of {ORg::logNbt::recent::*} / 10%{@C4}>]"
+                                    stop
+                            if {_style} = "condensed" or "dump":
+                                send formatted "%{ORg::prefix}% {@C3}NBT list for {@C2}all players{@C3} <tooltip:Page %{_p}% of %rounded up size of {ORg::logNbt::recent::*} / 10%><suggest command:/lognbt list all %{_style}% %{_p}%>&f(%{_p}%&f/%rounded up size of {ORg::logNbt::recent::*} / 10%&f)&r{@C3}:"
+                                loop 10 times:
+                                    set {_t} to loop-value + 10 * ({_p} - 1)
+                                    if {ORg::logNbt::recent::%{_t}%} is set:
+                                        set {_hSplit::*} to {ORg::logNbt::recent::%{_t}%} split at "@split@"
+                                        if {_style} = "condensed":
+                                            send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##6e6e6e>&nPlayer Info&r%nl% &8• {@C3}Player: %{_hSplit::4}%%nl% &8• {@C3}UUID: %{_hSplit::5}%%nl% &8• {@C3}Location: %{_hSplit::6}%, %{_hSplit::7}%, %{_hSplit::8}% in ""%{_hSplit::9}%""%nl% &8• {@C3}Time: %{_hSplit::10}%%nl% &8• {@C3}Click to give item><run command:/lognbt give all %{_t}%>{@C2}%ORlogNbtShortenString({_hSplit::1})%"
+                                        else:
+                                            send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##6e6e6e>&nPlayer Info&r%nl% &8• {@C3}Player: %{_hSplit::4}%%nl% &8• {@C3}UUID: %{_hSplit::5}%%nl% &8• {@C3}Location: %{_hSplit::6}%, %{_hSplit::7}%, %{_hSplit::8}% in ""%{_hSplit::9}%""%nl% &8• {@C3}Time: %{_hSplit::10}%%nl% &8• {@C3}Click to give item><run command:/lognbt give all %{_t}%>{@C2}%{_hSplit::1}%"
+                                    else:
+                                        exit loop
+                            else:
+                                ORlogNbtItemGui(player, "all", {ORg::logNbt::recent::*}, {_p})
+                        else:
+                            send formatted "%{ORg::prefix}% {@C3}There is currenty no NBT stored for all players."
+                            play sound {ORg::sound::good}
+                    else:
+                        set {_player} to arg-3 parsed as offline player
+                        set {_u} to uuid of {_player}
+                        if {_u} is set:
+                            if {ORl::%{_u}%::logNbt::recent::*} is set:
+                                set {_p} to 1
+                                if arg-4 is set:
+                                    set {_arg-4} to arg-4 parsed as integer
+                                    if {_arg-4} is between 1 and rounded up size of {ORl::%{_u}%::logNbt::recent::*} / 10:
+                                        set {_p} to {_arg-4}
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt list %{_style}% all [<1-%rounded up size of {ORl::%{_u}%::logNbt::recent::*} / 10%{@C4}>]"
+                                        stop
+                                if {_style} = "condensed" or "dump":
+                                    send formatted "%{ORg::prefix}% {@C3}NBT list for {@C2}%{_player}%{@C3} <tooltip:Page %{_p}% of %rounded up size of {ORl::%{_u}%::logNbt::recent::*} / 10%><suggest command:/lognbt list %{_style}% %{_player}% %{_p}%>&f(%{_p}%&f/%rounded up size of {ORl::%{_u}%::logNbt::recent::*} / 10%&f)&r{@C3}:"
+                                    loop 10 times:
+                                        set {_t} to loop-value + 10 * ({_p} - 1)
+                                        if {ORl::%{_u}%::logNbt::recent::%{_t}%} is set:
+                                            set {_hSplit::*} to {ORl::%{_u}%::logNbt::recent::%{_t}%} split at "@split@"
+                                            if {_style} = "condensed":
+                                                send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##6e6e6e>&nPlayer Info&r%nl% &8• {@C3}Player: %{_hSplit::4}%%nl% &8• {@C3}UUID: %{_hSplit::5}%%nl% &8• {@C3}Location: %{_hSplit::6}%, %{_hSplit::7}%, %{_hSplit::8}% in ""%{_hSplit::9}%""%nl% &8• {@C3}Time: %{_hSplit::10}%%nl% &8• {@C3}Click to give item><run command:/lognbt give %{_player}% %{_t}%>{@C2}%ORlogNbtShortenString({_hSplit::1})%"
+                                            else:
+                                                send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##6e6e6e>&nPlayer Info&r%nl% &8• {@C3}Player: %{_hSplit::4}%%nl% &8• {@C3}UUID: %{_hSplit::5}%%nl% &8• {@C3}Location: %{_hSplit::6}%, %{_hSplit::7}%, %{_hSplit::8}% in ""%{_hSplit::9}%""%nl% &8• {@C3}Time: %{_hSplit::10}%%nl% &8• {@C3}Click to give item><run command:/lognbt give %{_player}% %{_t}%>{@C2}%{_hSplit::1}%"
+                                        else:
+                                            exit loop
+                                else:
+                                    ORlogNbtItemGui(player, "%{_player}%", {ORl::%{_u}%::logNbt::recent::*}, {_p})
+                            else:
+                                send formatted "%{ORg::prefix}% {@C2}%{_player}%{@C3} has no NBT information gathered."
+                                play sound {ORg::sound::good}
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Invalid player: /lognbt list %{_style}% <all/(player)>"
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt list %{_style}% <all/(player)>"
+            else if arg-1 = "give" or "g":
+                if arg-2 is set:
+                    if arg-2 = "all" or "a":
+                        if arg-3 is set:
+                            set {_arg-3} to arg-3 parsed as integer
+                            if {_arg-3} is between 1 and size of {ORg::logNbt::recent::*}:
+                                set {_rSplit::*} to {ORg::logNbt::recent::%{_arg-3}%} split at "@split@"
+                                set {_item} to {_rSplit::2} parsed as item
+                                set {_item} to {_item} with nbt compound from {_rSplit::3}
+                                give player {_item}
+                                send formatted "%{ORg::prefix}% {@C3}Item from {@C2}all players{@C3} at index number {@C2}%{_arg-3}%{@C3} given successfully."
+                                play sound {ORg::sound::good}
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt give all <1/%size of {ORg::logNbt::recent::*}%>"
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt give all <1/%size of {ORg::logNbt::recent::*}%>"
+                    else:
+                        set {_player} to arg-2 parsed as offline player
+                        set {_u} to uuid of {_player}
+                        if {_u} is set:
+                            if {ORl::%{_u}%::logNbt::recent::*} is set:
+                                if arg-3 is set:
+                                    set {_arg-3} to arg-3 parsed as integer
+                                    if {_arg-3} is between 1 and size of {ORl::%{_u}%::logNbt::recent::*}:
+                                        set {_rSplit::*} to {ORl::%{_u}%::logNbt::recent::%{_arg-3}%} split at "@split@"
+                                        set {_item} to {_rSplit::2} parsed as item
+                                        set {_item} to {_item} with nbt compound from {_rSplit::3}
+                                        give player {_item}
+                                        send formatted "%{ORg::prefix}% {@C3}Item from {@C2}%{_player}%{@C3} at index number {@C2}%{_arg-3}%{@C3} given successfully."
+                                        play sound {ORg::sound::good}
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt give %{_player}% <1/%size of {ORl::%{_u}%::logNbt::recent::*}%>"
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt give %{_player}% <1/%size of {ORl::%{_u}%::logNbt::recent::*}%>"
+                            else:
+                                send formatted "%{ORg::prefix}% {@C2}%{_player}%{@C3} has no NBT information gathered."
+                                play sound {ORg::sound::good}
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Invalid player: /lognbt give <all/(player)>"
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /lognbt give <all/(player)>"
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /lognbt <list/give>"
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+on right click:
+    if nbt of held item is set:
+        if "%nbt of held item%" != "{}" or "{Damage:0}":
+            set {_u} to player's uuid
+            set {_nbt} to "%ORremoveColonSpecifier(minecraft name of held item)%%nbt of held item%"
+            set {_hash} to "%{_nbt}%@split@%type of tool%@split@%nbt of held item%@split@%player%@split@%{_u}%@split@%rounded down x-coordinate of player%@split@%rounded down y-coordinate of player%@split@%rounded down z-coordinate of player%@split@%player's world%@split@%now% UTC"
+            set {_local1Split::*} to {ORl::%{_u}%::logNbt::recent::1} split at "@split@"
+            if {_local1Split::1} != {_nbt}:
+                add {_hash} to {ORg::logNbt::recent::*}
+                add {_hash} to {ORl::%{_u}%::logNbt::recent::*}
+                set {ORg::logNbt::recent::*} to ORlogNbtListFix({ORg::logNbt::recent::*})
+                set {ORl::%{_u}%::logNbt::recent::*} to ORlogNbtListFix({ORl::%{_u}%::logNbt::recent::*})
+
+function ORlogNbtListFix(s: strings) :: strings:
+    set {_message} to {_s::%size of {_s::*}%}
+    loop size of {_s::*} times:
+        set {_s::%size of {_s::*} - loop-value + 1%} to {_s::%size of {_s::*} - loop-value%}
+    set {_s::1} to {_message}
+    if size of {_s::*} > 100:
+        delete {_s::101}
+    return {_s::*}
+
+function ORlogNbtShortenString(s: string) :: string:
+    if length of {_s} > 55:
+        set {_check} to true
+    set {_s} to first 55 characters of {_s}
+    if {_check} is set:
+        return "%{_s}%..."
+    else:
+        return {_s}
+
+function ORlogNbtItemGui(p: player, p2: string, recent: strings, page: integer):
+    set {_u} to {_p}'s uuid
+    if ORadminPermission({_u}) = true:
+        if {_p2} = "all":
+            set {_guiName} to "<##4f4f4f>&lLOG NBT &0| <##ff2626>All Players &0(%{_page}%&0/%rounded up size of {_recent::*} / 10%&0)"
+        else:
+            set {_guiName} to "<##4f4f4f>&lLOG NBT &0| <##ff2626>%{_p2}% &0(%{_page}%&0/%rounded up size of {_recent::*} / 10%&0)"
+        set metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to chest inventory with 5 rows named {_guiName}
+        set slot 1, 7, 10, 16, 19, 20, 21, 22, 23, 24, 25, 28, 34, 37 and 43 of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to black stained glass pane named " "
+        loop 10 times:
+            set {_index} to loop-value + 10 * ({_page} - 1)
+            set {_rSplit::*} to {_recent::%{_index}%} split at "@split@"
+            set {_tempPlayer} to {_rSplit::4} parsed as offline player
+            set {_skull} to skull of {_tempPlayer}
+            set name of {_skull} to "&f&l→ <##6e6e6e>&nPlayer Info"
+            set lore of {_skull} to " &8• {@C3}Player: %{_rSplit::4}%", " &8• {@C3}UUID: %{_rSplit::5}%", " &8• {@C3}Location: %{_rSplit::6}%, %{_rSplit::7}%, %{_rSplit::8}% in ""%{_rSplit::9}%""" and  " &8• {@C3}Click to give item"
+            set {_item} to {_rSplit::2} parsed as item
+            set {_item} to {_item} with nbt compound from {_rSplit::3}
+            if loop-value is between 1 and 5:
+                set slot 1 + loop-value of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to {_item}
+                set slot 10 + loop-value of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to {_skull}
+            else:
+                set slot 23 + loop-value of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to {_item}
+                set slot 32 + loop-value of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to {_skull}
+        if {_page} != 1:
+            set slot 36 of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to arrow named "&fPage %{_page} - 1%"
+        if {_page} != rounded up size of {_recent::*} / 10:
+            set slot 44 of metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to arrow named "&fPage %{_page} + 1%"
+        open metadata tag "ORl::%{_u}%::logNbt::item::gui" of {_p} to {_p}
+        play sound {ORg::sound::good} to {_p}
+
+on inventory click:
+    set {_u} to player's uuid
+    if event-inventory = metadata tag "ORl::%{_u}%::logNbt::item::gui" of player:
+        cancel event
+        set {_nameSplit::*} to name of event-inventory split at " "
+        set {_nameSplit::*} to uncolored {_nameSplit::*}
+        if {_nameSplit::4} = "All":
+            set {_p2} to "all"
+            set {_pageSplit::*} to {_nameSplit::6} split at "/"
+            replace all "(" with "" in {_pageSplit::1}
+            set {_page} to {_pageSplit::1} parsed as integer
+        else:
+            set {_p2} to {_nameSplit::4}
+            set {_pageSplit::*} to {_nameSplit::5} split at "/"
+            replace all "(" with "" in {_pageSplit::1}
+            set {_page} to {_pageSplit::1} parsed as integer
+        if index of event-slot is between 2 and 6:
+            make player execute command "/lognbt give %{_p2}% %(index of event-slot) - 1 + 10 * ({_page} - 1)%"
+        else if index of event-slot is between 11 and 15:
+            make player execute command "/lognbt give %{_p2}% %(index of event-slot) - 10 + 10 * ({_page} - 1)%"
+        else if index of event-slot is between 29 and 33:
+            make player execute command "/lognbt give %{_p2}% %(index of event-slot) - 23 + 10 * ({_page} - 1)%"
+        else if index of event-slot is between 38 and 42:
+            make player execute command "/lognbt give %{_p2}% %(index of event-slot) - 32 + 10 * ({_page} - 1)%"
+        else if index of event-slot = 36 or 44:
+            if event-slot != air:
+                if {_p2} = "all":
+                    if index of event-slot = 36:
+                        set {_tempPage} to {_page} - 1
+                        set {_tempPage} to "%{_tempPage}%" parsed as integer
+                        ORlogNbtItemGui(player, {_p2}, {ORg::logNbt::recent::*}, {_tempPage})
+                    else:
+                        set {_tempPage} to {_page} + 1
+                        set {_tempPage} to "%{_tempPage}%" parsed as integer
+                        ORlogNbtItemGui(player, {_p2}, {ORg::logNbt::recent::*}, {_tempPage})
+                else:
+                    set {_u} to uuid of ({_p2} parsed as offline player)
+                    if index of event-slot = 36:
+                        set {_tempPage} to {_page} - 1
+                        set {_tempPage} to "%{_tempPage}%" parsed as integer
+                        ORlogNbtItemGui(player, {_p2}, {ORl::%{_u}%::logNbt::recent::*}, {_tempPage})
+                    else:
+                        set {_tempPage} to {_page} + 1
+                        set {_tempPage} to "%{_tempPage}%" parsed as integer
+                        ORlogNbtItemGui(player, {_p2}, {ORl::%{_u}%::logNbt::recent::*}, {_tempPage})
+
+
+command /resetserver [<string>]:
+    aliases: /rs
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            set {_p} to ""
+            if arg-1 is set:
+                set {_p} to arg-1
+            set {_p::*} to {_p} split at "-"
+            send formatted "%{ORg::prefix}% {@C3}Server resetting process initiated:" to all players
+            play sound "minecraft:entity.player.levelup" to all players
+            if {_p::*} contains "wait" or "w":
+                wait 3 seconds
+            execute console command "/gamerule sendCommandFeedback false"
+            if {_p::*} does not contain "noClear" or "nc" or "noPlayerData" or "npd":
+                execute console command "/clear @a"
+            if {_p::*} does not contain "noGamerule" or "ng":
+                set {_l::*} to "gamerule announceAdvancements false@split@gamerule commandBlockOutput false@split@gamerule disableElytraMovementCheck true@split@gamerule disableRaids false@split@gamerule doDaylightCycle false@split@gamerule doEntityDrops true@split@gamerule doFireTick true@split@gamerule doImmediateRespawn true@split@gamerule doMobLoot true@split@gamerule doInsomnia true@split@gamerule doLimitedCrafting false@split@gamerule doMobLoot true@split@gamerule doMobSpawning false@split@gamerule doPatrolSpawning true@split@gamerule doTileDrops true@split@gamerule doTraderSpawning true@split@gamerule doWeatherCycle false@split@gamerule drowningDamage true@split@gamerule fallDamage true@split@gamerule fireDamage true@split@gamerule forgiveDeadPlayers true@split@gamerule keepInventory true@split@gamerule logAdminCommands true@split@gamerule maxCommandChainLength 65536@split@gamerule maxEntityCramming 24@split@gamerule mobGriefing true@split@gamerule naturalRegeneration true@split@gamerule randomTickSpeed 3@split@gamerule reducedDebugInfo false@split@gamerule showDeathMessages true@split@gamerule spawnRadius 0@split@gamerule spectatorsGenerateChunks true@split@gamerule universalAnger false@split@gamerule blockExplosionDropDecay true@split@gamerule commandModificationBlockLimit 100000@split@gamerule doLimitedCrafting false@split@gamerule doVinesSpread true@split@gamerule doWardenSpawning true@split@gamerule freezeDamage true@split@gamerule globalSoundEvents true@split@gamerule lavaSourceConversion false@split@gamerule maxCommandChainLength 65536@split@gamerule mobExplosionDropDecay true@split@gamerule playersSleepingPercentage 100@split@gamerule snowAccumulationHeight 1@split@gamerule tntExplosionDropDecay true@split@gamerule waterSourceConversion true" split at "@split@"
+                set {_worlds::*} to "overworld@split@the_nether@split@the_end" split at "@split@"
+                loop size of {_l::*} times:
+                    loop size of {_worlds::*} times:
+                        execute console command "/execute in %{_worlds::%loop-value-2%}% run %{_l::%loop-value-1%}%"
+            if {_p::*} does not contain "noMisc" or "nm":
+                set {_l::*} to "/difficulty normal@split@/time set 6000@split@/weather clear@split@/worldborder center 0 0@split@/worldborder set 59999968" split at "@split@"
+                loop size of {_l::*} times:
+                    execute console command {_l::%loop-value%}
+                delete all entities
+                execute console command "/forceload remove all"
+            if {_p::*} does not contain "noNewLocation" or "nnl":
+                set {_x} to random integer between 1000000 and -1000000
+                set {_z} to random integer between 1000000 and -1000000
+                set block at location at {_x}, -61, {_z} in world "world" to diamond block
+                ORsetSpawn(location({_x}, -60, {_z}, "world"))
+            if {_p::*} does not contain "noTeleport" or "nt" or "noNewLocation" or "nnl":
+                teleport all players to {ORg::spawn::location}
+            if {_p::*} does not contain "noPlayerData" or "npd":
+                set {_l::*} to "/effect clear @a", "/experience set @a 0" and "/gamemode creative @a"
+                loop size of {_l::*} times:
+                    execute console command {_l::%loop-value%}
+                set {_l::*} to "/attribute @player@ minecraft:generic.armor base set 0@split@/attribute @player@ minecraft:generic.armor_toughness base set 0@split@/attribute @player@ minecraft:generic.attack_damage base set 1@split@/attribute @player@ minecraft:generic.attack_speed base set 4@split@/attribute @player@ minecraft:generic.knockback_resistance base set 0@split@/attribute @player@ minecraft:generic.luck base set 0@split@/attribute @player@ minecraft:generic.max_health base set 20@split@/attribute @player@ minecraft:generic.movement_speed base set .1" split at "@split@"
+                loop size of {_l::*} times:
+                    loop all players:
+                        set {_temp} to {_l::%loop-value-1%}
+                        replace all "@player@" with "%loop-value-2%" in {_temp}
+                        execute console command "%{_temp}%"
+            execute console command "/gamerule sendCommandFeedback true"
+            send formatted "%{ORg::prefix}% {@C3}Server resetting process complete." to all players
+            play sound "ui.toast.challenge_complete" to all players
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+
+command /discord [<string>]:
+    aliases: /dc
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if arg-1 is set:
+            if ORadminPermission({_u}) = true:
+                if arg-1 parsed as player is set:
+                    add arg-1 parsed as player to {_l::*}
+                    send formatted "%{ORg::prefix}% {@C3}Discord message sent to {@C2}%arg-1%{@C3}."
+                    play sound {ORg::sound::good}
+                else if arg-1 = "all" or "a":
+                    send formatted "%{ORg::prefix}% {@C3}Discord message sent to {@C2}all players{@C3}."
+                    loop all players:
+                        add loop-value to {_l::*}
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Invalid player: /discord <all/(player)>."
+                    stop
+            else:
+                send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use an extra argument with this command."
+                stop
+        else:
+            add player to {_l::*}
+            if {_u} = "commandBlock":
+                send formatted "%{ORg::prefix::commandBlock}% {@C3}Discord: &b&nhttps://discord.gg/YpWHHK3Z8x"
+        loop size of {_l::*} times:
+            send formatted "%{ORg::prefix}% {@C3}Discord: <tooltip:&f&l↓ <##17ff8b>Click Here &f&l↓><link:https://discord.gg/YpWHHK3Z8x>&b&nhttps://discord.gg/YpWHHK3Z8x" to {_l::%loop-value%}
+            play sound {ORg::sound::good} to {_l::%loop-value%}
+
+
+command /config [<string>] [<string>] [<string>] [<string>]:
+    aliases: /cf
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = true:
+            if arg-1 is set:
+                if arg-1 = "commandfilter" or "cf":
+                    if arg-2 is set:
+                        if arg-2 = "add" or "a":
+                            ORconfigCommandFilterHelper1(player, "add1", "{@C3}Input a {@C2}hash{@C3} for a command filter (Ex: ""{@C2}./ban{@C3}""). ""{@C2}./{@C3}"" represents the first ""{@C2}/{@C3}"" of a hash. Type in {@C2}@cancel@{@C3} to cancel:")
+                        else if arg-2 = "remove" or "rm":
+                            if arg-3 is set:
+                                if mod(arg-3 parsed as integer, 1) = 0:
+                                    set {_arg-3} to arg-3 parsed as integer
+                                    if {_arg-3} is between 1 and size of {ORg::blockedCommand::hash::*}:
+                                        set {ORg::blockedCommand::hash::*} to ORconfigCommandFilterFixList({ORg::blockedCommand::hash::*}, {_arg-3})
+                                        set {ORg::blockedCommand::message::*} to ORconfigCommandFilterFixList({ORg::blockedCommand::message::*}, {_arg-3})
+                                        send formatted "%{ORg::prefix}% {@C3}Hash successfully removed in command filter at index number {@C2}%arg-3%{@C3}."
+                                        play sound {ORg::sound::good}
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter remove <1-%size of {ORg::blockedCommand::hash::*}%>"
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter remove> <1-%size of {ORg::blockedCommand::hash::*}%>"
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config commandfilter remove <1-%size of {ORg::blockedCommand::hash::*}%>"
+                        else if arg-2 = "set" or "s":
+                            if arg-3 is set:
+                                if mod(arg-3 parsed as integer, 1) = 0:
+                                    set {_arg-3} to arg-3 parsed as integer
+                                    if {_arg-3} is between 1 and size of {ORg::blockedCommand::hash::*}:
+                                        set {ORl::%{_u}%::chatInput::config::commandFilter::index} to {_arg-3}
+                                        ORconfigCommandFilterHelper1(player, "set1", "{@C3}Input a {@C2}hash{@C3} for a command filter at index number {@C2}%{_arg-3}%{@C3} (Ex: ""{@C2}./ban{@C3}""). ""{@C2}./{@C3}"" represents the first ""{@C2}/{@C3}"" of a hash. Type in {@C2}@cancel@{@C3} to cancel:")
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter set <1-%size of {ORg::blockedCommand::hash::*}%>"
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter set <1-%size of {ORg::blockedCommand::hash::*}%>"
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config commandfilter set <1-%size of {ORg::blockedCommand::hash::*}%>"
+                        else if arg-2 = "modify" or "m":
+                            if arg-3 is set:
+                                if arg-4 is set:
+                                    set {_check1} to true
+                                    if mod(arg-4 parsed as integer, 1) = 0:
+                                        set {_arg-4} to arg-4 parsed as integer
+                                        if {_arg-4} is between 1 and size of {ORg::blockedCommand::hash::*}:
+                                            set {_check2} to true
+                                if arg-3 = "hash" or "h":
+                                    if {_check2} is set:
+                                        set {ORl::%{_u}%::chatInput::config::commandFilter::index} to {_arg-4}
+                                        ORconfigCommandFilterHelper1(player, "hash", "{@C3}Input a {@C2}hash{@C3} for a command filter at index number {@C2}%{_arg-4}%{@C3} (Ex: ""{@C2}./ban{@C3}""). ""{@C2}./{@C3}"" represents the first ""{@C2}/{@C3}"" of a hash. Type in {@C2}@cancel@{@C3} to cancel:")
+                                else if arg-3 = "permissionmessage" or "pm":
+                                    if {_check2} is set:
+                                        set {ORl::%{_u}%::chatInput::config::commandFilter::index} to {_arg-4}
+                                        ORconfigCommandFilterHelper1(player, "permissionmessage", "{@C3}Input a {@C2}permission message{@C3} that goes along with the hash at index number {@C2}%{_arg-4}%{@C3} (Ex: ""{@C2}You are not permitted to use this command.{@C3}""). Type in {@C2}@cancel@{@C3} to cancel:")
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter modify <hash/permissionmessage>"
+                                    stop
+                                if {_check1} is not set:
+                                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /config commandfilter modify <hash/permissionmessage> <1-%size of {ORg::blockedCommand::hash::*}%>"
+                                else:
+                                    if {_check2} is not set:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter modify <hash/permissionmessage> <1-%size of {ORg::blockedCommand::hash::*}%>"
+
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config commandfilter modify <hash/permissionmessage>"
+                        else if arg-2 = "reset" or "rs":
+                            set {ORg::blockedCommand::hash::*} to {ORg::config::commandFilter::reset::hash::*}
+                            set {ORg::blockedCommand::message::*} to {ORg::config::commandFilter::reset::message::*}
+                            send formatted "%{ORg::prefix}% {@C3}Command filter successfully reset to original values."
+                            play sound {ORg::sound::good}
+                        else if arg-2 = "list" or "l":
+                            set {_p} to 1
+                            if arg-3 is set:
+                                set {_arg-3} to arg-3 parsed as integer
+                                if {_arg-3} is between 1 and rounded up size of {ORg::blockedCommand::hash::*} / 10:
+                                    set {_p} to {_arg-3}
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter list [<1-%rounded up size of {ORg::blockedCommand::hash::*} / 10%{@C4}>]"
+                                    stop
+                            send formatted "%{ORg::prefix}% {@C3}Filter list <tooltip:Page %{_p}% of %rounded up size of {ORg::blockedCommand::hash::*} / 10%><suggest command:/config commandfilter list %{_p}%>&f(%{_p}%&f/%rounded up size of {ORg::blockedCommand::hash::*} / 10%&f)&r{@C3}:"
+                            loop 10 times:
+                                set {_t} to loop-value + 10 * ({_p} - 1)
+                                if {ORg::blockedCommand::hash::%{_t}%} is set:
+                                    send formatted " {@C3}%{_t}%&f. <tooltip:&f&l→ <##ff402e>&nHash Info&r%nl% &8• {@C3}Permission Message: ""&r%{ORg::blockedCommand::message::%{_t}%}%{@C3}""%nl% &8• {@C3}Click to remove hash><suggest command:/config commandfilter remove %{_t}%>{@C2}%{ORg::blockedCommand::hash::%{_t}%}%"
+                                else:
+                                    exit loop
+                            play sound {ORg::sound::good}
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config commandfilter <add/remove/set/modify/reset/list>"
+                    else:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /config commandfilter <add/remove/set/modify/reset/list>"
+                else if arg-1 = "spawnerfix" or "sf":
+                    if arg-2 is set:
+                        if arg-2 is "set" or "s":
+                            if arg-3 is set:
+                                if arg-3 is "spawnerTickingRate" or "str":
+                                    if arg-4 is set:
+                                        if arg-4 parsed as integer is set:
+                                            set {ORg::spawnerFix::spawnerTickingRate} to arg-4 parsed as integer
+                                            set {_temp} to "%{ORg::spawnerFix::spawnerTickingRate}% ticks" parsed as timespan
+                                            send formatted "%{ORg::prefix}% {@C2}spawnerTickingRate{@C3} is now set to: {@C2}%{_temp}%"
+                                        else:
+                                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix set spawnerTickingRate <##ticks>"
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix set spawnerTickingRate <##ticks>"
+                                else if arg-3 is "spawnerMaxEntities" or "sme":
+                                    if arg-4 is set:
+                                        if arg-4 parsed as integer is set:
+                                            set {ORg::spawnerFix::spawnerMaxEntities} to arg-4 parsed as integer
+                                            send formatted "%{ORg::prefix}% {@C2}spawnerMaxEntities{@C3} is now set to: {@C2}%{ORg::spawnerFix::spawnerMaxEntities}%{@C3} entities"
+                                        else:
+                                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix set spawnerMaxEntities <##entities>"
+                                    else:
+                                        send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix set spawnerMaxEntities <##entities>"
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix set <spawnerTickingRate/spawnerMaxEntities>"
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config spawnerFix set <spawnerTickingRate/spawnerMaxEntities>"
+                        else if arg-2 is "get" or "g":
+                            if arg-3 is set:
+                                if arg-3 is "spawnerTickingRate" or "str":
+                                    set {_temp} to "%{ORg::spawnerFix::spawnerTickingRate}% ticks" parsed as timespan
+                                    send formatted "%{ORg::prefix}% {@C3}Current spawnerTickingRate: {@C2}%{_temp}%"
+                                else if arg-3 is "spawnerMaxEntities" or "sme":
+                                    send formatted "%{ORg::prefix}% {@C3}Current spawnerMaxEntities: {@C2}%{ORg::spawnerFix::spawnerMaxEntities}%{@C3} entities"
+                                else:
+                                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix get <spawnerTickingRate/spawnerMaxEntities>"
+                            else:
+                                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config spawnerFix get <spawnerTickingRate/spawnerMaxEntities>"
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config spawnerFix <set/get>"
+                    else:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /config spawnerFix <set/get>"
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /config <commandfilter/spawnerFix>"
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /config <commandfilter/spawnerFix>"
+        else:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+
+on chat:
+    set {_u} to player's uuid
+    if {ORl::%{_u}%::chatInput::config::commandFilter::type} is set:
+        send formatted "%{ORg::prefix}% {@C3}Input: &f%uncolored message%"
+        if message = "@cancel@":
+            send formatted "%{ORg::prefix}% {@C3}Chat input cancelled."
+            play sound {ORg::sound::good}
+            delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+        if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "add1":
+            set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to message
+            if first 2 characters of message = "./":
+                set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to "/%last length of message - 2 characters of message%"
+            ORconfigCommandFilterHelper1(player, "add2", "{@C3}Now input a {@C2}permission message{@C3} that goes along with the hash (Ex: ""{@C2}You are not permitted to use this command.{@C3}""). Type in {@C2}@cancel@{@C3} to cancel:")
+        else if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "add2":
+            add {ORl::%{_u}%::chatInput::config::commandFilter::temp} to {ORg::blockedCommand::hash::*}
+            add message to {ORg::blockedCommand::message::*}
+            send formatted "%{ORg::prefix}% {@C3}Hash successfully created in command filter at index number {@C2}%size of {ORg::blockedCommand::hash::*}%{@C3}."
+            play sound {ORg::sound::good}
+            delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+        else if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "set1":
+            set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to message
+            if first 2 characters of message = "./":
+                set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to "/%last length of message - 2 characters of message%"
+            ORconfigCommandFilterHelper1(player, "set2", "{@C3}Now input a {@C2}permission message{@C3} that goes along with the hash at index number {@C2}%{ORl::%{_u}%::chatInput::config::commandFilter::index}%{@C3} (Ex: ""{@C2}You are not permitted to use this command.{@C3}""). Type in {@C2}@cancel@{@C3} to cancel:")
+        else if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "set2":
+            set {ORg::blockedCommand::hash::%{ORl::%{_u}%::chatInput::config::commandFilter::index}%} to {ORl::%{_u}%::chatInput::config::commandFilter::temp}
+            set {ORg::blockedCommand::hash::%{ORl::%{_u}%::chatInput::config::commandFilter::index}%} to message
+            send formatted "%{ORg::prefix}% {@C3}Hash successfully set in command filter at index number {@C2}%{ORl::%{_u}%::chatInput::config::commandFilter::index}%{@C3}."
+            play sound {ORg::sound::good}
+            delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+        else if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "hash":
+            set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to message
+            if first 2 characters of message = "./":
+                set {ORl::%{_u}%::chatInput::config::commandFilter::temp} to "/%last length of message - 2 characters of message%"
+            set {ORg::blockedCommand::hash::%{ORl::%{_u}%::chatInput::config::commandFilter::index}%} to {ORl::%{_u}%::chatInput::config::commandFilter::temp}
+            send formatted "%{ORg::prefix}% {@C3}Hash successfully set in command filter at index number {@C2}%{ORl::%{_u}%::chatInput::config::commandFilter::index}%{@C3}."
+            play sound {ORg::sound::good}
+            delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+        else if {ORl::%{_u}%::chatInput::config::commandFilter::type} = "permissionmessage":
+            set {ORg::blockedCommand::message::%{ORl::%{_u}%::chatInput::config::commandFilter::index}%} to message
+            send formatted "%{ORg::prefix}% {@C3}Permission message successfully set in command filter at index number {@C2}%{ORl::%{_u}%::chatInput::config::commandFilter::index}%{@C3}."
+            play sound {ORg::sound::good}
+            delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+        cancel event
+
+on quit:
+    if {ORl::%{_u}%::chatInput::config::commandFilter::type} is set:
+        delete {ORl::%{_u}%::chatInput::config::commandFilter::*}
+
+function ORconfigCommandFilterHelper1(p: player, t: string, m: string):
+    set {_u} to {_p}'s uuid
+    set {ORl::%{_u}%::chatInput::config::commandFilter::type} to {_t}
+    set {ORl::%{_u}%::chatInput::config::commandFilter::message} to {_m}
+    send formatted "%{ORg::prefix}% %{_m}%" to {_p}
+    play sound {ORg::sound::good} to {_p}
+
+function ORconfigCommandFilterFixList(s: strings, i: integer) :: strings:
+    loop size of {_s::*} - {_i} + 1 times:
+        set {_s::%{_i} + (loop-value) - 1%} to {_s::%{_i} + loop-value%}
+    delete {_s::%size of {_s::*} + 1%}
+    return {_s::*}
+
+function ORsenderUuidAssignment(s: sender, p: player) :: string:
+    if {_s} = {_p}:
+        set {_u} to {_p}'s uuid
+    else if {_s} = command block or chain command block or repeating command block or command minecart:
+        set {_u} to "commandBlock"
+    else if {_s} = console:
+        set {_u} to "console"
+    return {_u}
+
+function ORadminPermission(u: string) :: boolean:
+    if {ORg::adminList::uuid::*} contains {_u}:
+        return true
+    else if {_u} = "console":
+        return true
+    return false
+
+function ORassignPrefix(u: string) :: string:
+    if {_u} = "commandBlock":
+        return "%{ORg::prefix::commandBlock}%"
+    else:
+        return "%{ORg::prefix::commandBlock}%"
+
+function ORremoveStringListHole(s: strings) :: strings:
+    loop size of {_s::*} + 1 times:
+        if {_s::%loop-value%} is not set:
+            loop size of {_s::*} + 1 - loop-value times:
+                set {_s::%loop-value-1%} to {_s::%loop-value-1 + loop-value-2%}
+        return {_s::*}
+
+
+
+
+on load:
+    set {ORg::limit::command::use::default} to 2
+    set {ORg::limit::command::use::/advancement} to 1
+    set {ORg::limit::command::use::/tellraw} to 10
+    set {ORg::limit::command::use::/say} to 10
+    set {ORg::limit::command::use::/w} to 10
+    set {ORg::limit::command::use::/msg} to 10
+    set {ORg::limit::command::use::/say} to 10
+    set {ORg::limit::command::use::/clear} to 10
+    set {ORg::limit::command::use::/give} to 10
+    set {ORg::limit::command::use::/effect} to 10
+    set {ORg::limit::command::randomTickSpeed} to 1000
+    set {ORg::limit::command::particleAmount} to 10000
+
+    set {ORg::limit::block::mass::*} to "dragon_egg@split@enchanting_table@split@end_gateway@split@end_portal@split@scafolding@split@spawner" split at "@split@"
+    set {ORg::limit::block::single::*} to "end_gateway@split@end_portal@split@nether_portal" split at "@split@"
+
+    set {ORg::limit::entity::mass} to 1000
+    set {ORg::limit::entity::single::tnt} to 500
+    set {ORg::limit::entity::single::enderDragon} to 200
+
+    set {ORg::limit::worldEdit::blockLimit} to 1000000
+    set {ORg::limit::worldEdit::radius} to 100
+    set {ORg::limit::worldEdit::spamRadius} to 50
+
+    delete {ORg::blockedCommand::hash::*}
+    delete {ORg::blockedCommand::message::*}
+
+    add "/ban|/ban-ip|/deop|/kick|/pardon|/pardon-ip|/reload|/rl|/restart|/setidletimeout|/skript|/sk|/stop|/whitelist" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use ""@command@""" to {ORg::blockedCommand::message::*}
+
+    add "/gamemode 3|ps2 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam set other players' gamemodes using ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/kill|/damage 2|ps2 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam kill other players using ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/teleport|/tp 2|ps1 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam teleport other players using ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/spreadplayers 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/advancement 2|sc|grant 3|ps1 4|sc|everything 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam the granting of every advancement to other players using ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/tellraw|/say|/w|/msg|/me 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/clear|/give 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/effect 2|sc|give 3|ps1 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam the giving of effects to other players using ""@command@""" to {ORg::blockedCommand::message::*}
+    add "/setblock 5|sbm 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam the setting of a ""@block@"" block." to {ORg::blockedCommand::message::*}
+    add "/save-all 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam ""@command@""" to {ORg::blockedCommand::message::*}
+    add "//replacenear 2|i>|%{ORg::limit::worldEdit::spamRadius}% 2|i<|%{ORg::limit::worldEdit::radius} + 1% 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam the use of a radius greater than %{ORg::limit::worldEdit::spamRadius}% with world edit." to {ORg::blockedCommand::message::*}
+    add "//sphere 3|i>|%{ORg::limit::worldEdit::spamRadius}% 3|i<|%{ORg::limit::worldEdit::radius} + 1% 1|ul" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to spam the use of a radius greater than %{ORg::limit::worldEdit::spamRadius}% with world edit." to {ORg::blockedCommand::message::*}
+
+    add "/fill 8|bm" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to fill using the block ""@block@""" to {ORg::blockedCommand::message::*}
+    add "/gamerule 2|sc|randomTickSpeed 3|i>|%{ORg::limit::command::randomTickSpeed}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to set the random tick speed to over %{ORg::limit::command::randomTickSpeed}%{@C4}." to {ORg::blockedCommand::message::*}
+    add "/particle 10|i>|%{ORg::limit::command::particleAmount}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to display over %{ORg::limit::command::particleAmount}%{@C4} particles." to {ORg::blockedCommand::message::*}
+    add "/particle 14|i>|%{ORg::limit::command::particleAmount}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to display over %{ORg::limit::command::particleAmount}%{@C4} particles." to {ORg::blockedCommand::message::*}
+    add "/paper 2|sc|heap 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to run the command ""/paper heap""" to {ORg::blockedCommand::message::*}
+
+    add "//set 2|bm" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use the block ""@block@"" with world edit." to {ORg::blockedCommand::message::*}
+    add "//sphere 3|i>|%{ORg::limit::worldEdit::radius}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use a radius greater than %{ORg::limit::worldEdit::radius}% with world edit." to {ORg::blockedCommand::message::*}
+    add "//sphere 2|bm|" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use the block ""@block@"" with world edit." to {ORg::blockedCommand::message::*} 
+    add "//replacenear 4|bm" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use the block ""@block@"" with world edit." to {ORg::blockedCommand::message::*}
+    add "//replacenear 2|i>|%{ORg::limit::worldEdit::radius}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to use a radius greater than %{ORg::limit::worldEdit::radius}% with world edit." to {ORg::blockedCommand::message::*}
+    add "//limit 2|i>|%{ORg::limit::worldEdit::blockLimit}% 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to change your world edit limit to over %{ORg::limit::worldEdit::blockLimit}%." to {ORg::blockedCommand::message::*}
+    add "//schem|//schematic 2|sc|delete 1|cancelCommand" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to delete schematics." to {ORg::blockedCommand::message::*}
+
+    add "/summon 2|sc|fireball\small_fireball 6|nbt|fireballPowerCrash" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to summon a crash fireball." to {ORg::blockedCommand::message::*}
+    add "/summon 2|sc|wither 6|nbt|witherBan" to {ORg::blockedCommand::hash::*}
+    add "{@C4}You are not permitted to summon a wither ban." to {ORg::blockedCommand::message::*}
+
+    set {ORg::config::commandFilter::reset::hash::*} to {ORg::blockedCommand::hash::*}
+    set {ORg::config::commandFilter::reset::message::*} to {ORg::blockedCommand::message::*}
+
+
+on load:
+    loop all players:
+        if "%loop-player%" = "Captainclimber":
+            stop
+    execute console command "/resetserver"
+
+#entity limiter
+every tick:
+    #tnt cap
+    if size of all tnt > {ORg::limit::entity::single::tnt}:
+        delete all tnt
+
+    #ender dragon cap
+    if size of all ender dragons > {ORg::limit::entity::single::enderDragon}:
+        delete all ender dragons
+
+    #max entity cap
+    if size of all entities > {ORg::limit::entity::mass}:
+        delete all entities
+
+#spam command amount resetter
+every 10 seconds:
+    loop size of {ORg::blockedCommand::hash::*} times:
+        set {_hSplit::*} to {ORg::blockedCommand::hash::%loop-value%} split at " "
+        if {_hSplit::*} contains "1|ul":
+            set {_h1Split::*} to {_hSplit::1} split at "|"
+            loop size of {_h1Split::*} times:
+                loop size of {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*} times:
+                    set {_u} to {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::%loop-value-3%}
+                    set {ORl::%{_u}%::useLimit::%{_h1Split::%loop-value-2%}%} to 0
+                    remove {_u} from {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*}
+                    set {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*} to ORfixListWithHole({ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*})
+
+on command:
+    set {_u} to ORsenderUuidAssignment(sender, player)
+    set {_c} to "/%full command%"
+    set {_cSplit::*} to {_c} split at " "
+    set {_cSplit::1} to ORremoveColonSpecifier({_cSplit::1})
+    set {_c} to ""
+    loop size of {_cSplit::*} times:
+        set {_c} to "%{_c}%%{_cSplit::%loop-value%}% "
+    set {_c} to first length of {_c} - 1 characters of {_c}
+    set {_t} to ORallowableCommand({_u}, {_c})
+    if {_t} != "":
+        cancel event
+        send formatted "%ORassignPrefix({_u})% &r%{_t}%"   
+
+#converts spawn egg right-click into a command /summon
+on right click:
+    if minecraft name of event-item contains "spawn_egg":
+        set {_u} to uuid of player
+        set {_entityType} to string tag "EntityTag;id" of nbt of event-item
+        set {_nbt} to tag "EntityTag" of nbt of event-item
+        set {_permissionMessage} to ORallowableCommand({_u}, "/summon %{_entityType}% ~ ~ ~ %{_nbt}%")
+        if {_permissionMessage} != "":
+            cancel event
+            send formatted "%{ORg::prefix}% %{_permissionMessage}%" to player
+
+#converts spawn egg dispense into a command /summon
+on dispense:
+    if minecraft name of event-item contains "spawn_egg":
+        set {_u} to "noPlayer"
+        set {_entityType} to string tag "EntityTag;id" of nbt of event-item
+        set {_nbt} to tag "EntityTag" of nbt of event-item
+        set {_permissionMessage} to ORallowableCommand({_u}, "/summon %{_entityType}% ~ ~ ~ %{_nbt}%")
+        if {_permissionMessage} != "":
+            cancel event
+
+
+#returns if permissable command or not. "" = permissable, "%permission message%" = non-permissable
+function ORallowableCommand(u: string, c: string) :: string:
+    #checks if admin
+    if ORadminPermission({_u}) = true:
+        return ""
+    #assigns list to command split
+    set {_cSplit::*} to {_c} split at " "
+    #creates a new command if its an execute command
+    if {_cSplit::1} = "/execute":
+        loop size of {_cSplit::*} - 1 times:
+            if {_cSplit::%loop-value + 1%} = "run":
+                set {_runIndex} to loop-value + 1
+                exit loop
+        set {_c} to ""
+        loop size of {_cSplit::*} - {_runIndex} times:
+            set {_c} to "%{_c}%%{_cSplit::%loop-value + {_runIndex}%}% "
+        set {_c} to first length of {_c} - 1 characters of {_c}
+        return ORallowableCommand({_u}, "/%{_c}%")
+    #loops through each command check
+    loop size of {ORg::blockedCommand::hash::*} times:
+        #sets a list to the command check split into hashes
+        set {_hSplit::*} to {ORg::blockedCommand::hash::%loop-value%} split at " "
+        #sets a list to the command check aliases
+        set {_h1Split::*} to {_hSplit::1} split at "|"
+        loop size of {_h1Split::*} times:
+            #checks if command matches command check alias
+            if {_h1Split::%loop-value-2%} = {_cSplit::1}:
+                #command is a banned command, only 1 check
+                if {_hSplit::2} is not set:
+                    set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                    replace all "@command@" with "%{_h1Split::%loop-value-2%}%" in {_t}
+                    return {_t}
+
+                #loops through each command check individual check
+                loop size of {_hSplit::*} - 1 times:
+                    set {_lv3+1} to loop-value-3
+                    add 1 to {_lv3+1}
+                    #sets a list to the individual check components
+                    set {_hnSplit::*} to {_hSplit::%{_lv3+1}%} split at "|"
+                    #individual check: string check
+                    if {_hnSplit::2} = "sc":
+                        set {_hn3Split::*} to {_hnSplit::3} split at "\"
+                        if {_hn3Split::*} contains {_cSplit::%{_hnSplit::1}%} or ORremoveColonSpecifier({_cSplit::%{_hnSplit::1}%}):
+                            loop size of {_hn3Split::*} times:
+                                if {_hn3Split::%loop-value-4%} = {_cSplit::%{_hnSplit::1}%} or ORremoveColonSpecifier({_cSplit::%{_hnSplit::1}%}):
+                                    set {_sclv-4} to loop-value-4
+                                    exit loop
+                        else:
+                            exit loop
+                    else if first 2 characters of {_hnSplit::2} = "ps":
+                        set {_ps} to ""
+                        loop size of {_cSplit::*} - {_hnSplit::1} parsed as integer + 1 times:
+                            set {_t} to {_hnSplit::1} parsed as integer - 1 + loop-value-4
+                            set {_ps} to "%{_ps}%%{_cSplit::%{_t}%}%"
+                        set {_i} to last character of {_hnSplit::2} parsed as integer
+                        if ORlawfulPlayerSelector({_u}, {_ps}, {_i}) = true:
+                            exit loop
+                    else if {_hnSplit::2} = "sbm":
+                        set {_block} to ORremoveColonSpecifier({_cSplit::%{_hnSplit::1}%})
+                        if {ORg::limit::block::single::*} does not contain {_block}:
+                            exit loop
+                    else if {_hnSplit::2} = "i>":
+                        if {_cSplit::%{_hnSplit::1}%} parsed as integer > {_hnSplit::3} parsed as integer:
+                            set {_doStuff} to true #not operator work around
+                        else:
+                            exit loop
+                    else if {_hnSplit::2} = "i<":
+                        if {_cSplit::%{_hnSplit::1}%} parsed as integer < {_hnSplit::3} parsed as integer:
+                            set {_doStuff} to true #not operator work around
+                        else:
+                            exit loop
+                    else if {_hnSplit::2} = "bm":
+                        set {_block} to ORremoveColonSpecifier({_cSplit::%{_hnSplit::1}%})
+                        loop size of {ORg::limit::block::mass::*} times:
+                            if {ORg::limit::block::mass::%loop-value-4%} contains {_block}:
+                                set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                replace all "@block@" with {_block} in {_t}
+                                return {_t}
+                    else if {_hnSplit::2} = "cbm":
+                        loop size of {ORg::limit::block::mass::*} times:
+                            if {_c} contains {ORg::limit::block::mass::%loop-value-4%}:
+                                set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                replace all "@block@" with "%{ORg::limit::block::mass::%loop-value-4%}%" in {_t}
+                                return {_t}
+                    else if {_hnSplit::2} = "ul":
+                        if {ORg::limit::command::use::%{_h1Split::%loop-value-2%}%} is not set:
+                            set {_useLimit} to {ORg::limit::command::use::default}
+                        else:
+                            set {_useLimit} to {ORg::limit::command::use::%{_h1Split::%loop-value-2%}%}
+                        if {ORl::%{_u}%::useLimit::%{_h1Split::%loop-value-2%}%} >= {_useLimit}:
+                            set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                            replace all "@command@" with "%{_h1Split::%loop-value-2%}%" in {_t}
+                            replace all "@block@" with {_block} in {_t}
+                            return {_t}
+                        else:
+                            add 1 to {ORl::%{_u}%::useLimit::%{_h1Split::%loop-value-2%}%}
+                            if {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*} does not contain {_u}:
+                                add {_u} to {ORg::useLimit::%{_h1Split::%loop-value-2%}%::executeList::*}
+                    else if {_hnSplit::2} = "cancelCommand":
+                        set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                        return {_t}
+                    else if {_hnSplit::2} = "nbt":
+                        set {_nbt} to ""
+                        loop size of {_cSplit::*} - {_hnSplit::1} parsed as integer + 1 times:
+                            set {_t} to {_hnSplit::1} parsed as integer - 1 + loop-value-4
+                            set {_nbt} to "%{_nbt}%%{_cSplit::%{_t}%}%"
+                        if {_hnSplit::3} = "i>":
+                            set {_t} to ORgetNbtNumber({_nbt}, {_hnSplit::4})
+                            if {_t} = -1:
+                                exit loop
+                            else if {_t} > {_hnSplit::5} parsed as number:
+                                set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                replace all "@string@" with "%{_hn3Split::%{_sclv-4}%}%" in {_t}
+                                return {_t}
+                        else if {_hnSplit::3} = "i<":
+                            set {_t} to ORgetNbtNumber({_nbt}, {_hnSplit::4})
+                            if {_t} = -1:
+                                exit loop
+                            else if {_t} < {_hnSplit::5} parsed as number:
+                                set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                replace all "@string@" with "%{_hn3Split::%{_sclv-4}%}%" in {_t}
+                                return {_t}
+                        else if {_hnSplit::3} = "fireballPowerCrash":
+                            set {_item} to bat spawn egg with nbt from {_nbt}
+                            set {_fakeNbt} to nbt of {_item}
+                            set {_powerDouble::*} to double list tag "power" of {_fakeNbt}
+                            set {_powerString::*} to string list tag "power" of {_fakeNbt}
+                            if {_powerDouble::*} is set:
+                                set {_power::*} to {_powerDouble::*}
+                            else:
+                                loop size of {_powerString::*} times:
+                                    set {_power::%loop-value-4%} to ORnbtNumberToNumber({_powerString::%loop-value-4%})
+                            loop size of {_power::*} times:
+                                set {_power::%loop-value-4%} to abs({_power::%loop-value-4%})
+                                if {_power::%loop-value-4%} > 100:
+                                    set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                    return {_t}
+                        else if {_hnSplit::3} = "witherBan":
+                            set {_item} to bat spawn egg with nbt from {_nbt}
+                            set {_fakeNbt} to nbt of {_item}
+                            set {_name} to string tag "CustomName" of {_fakeNbt}
+                            if length of {_name} > 32500:
+                                set {_t} to {ORg::blockedCommand::message::%loop-value-1%}
+                                return {_t}
+    return ""
+
+function ORgetNbtNumber(nbt: string, s: string) :: number:
+    set {_nbtSplit::*} to ORgetReadableNbt({_nbt})
+    if {_nbtSplit::*} contains {_s}:
+        loop size of {_nbtSplit::*} times:
+            if {_nbtSplit::%loop-value%} = {_s}:
+                return ORnbtNumberToNumber({_nbtSplit::%loop-value + 1%})
+    return -1
+
+function ORgetReadableNbt(nbt: string) :: strings:
+    set {_nbt} to ORmultipleReplace({_nbt}, ("{", "}", "[", "]" and "'"), "")
+    return ORmultipleReplace({_nbt}, (":" and ","), " ") split at " "
+
+function ORnbtNumberToNumber(n: string) :: number:
+    if {_n} contains "Infinity":
+        return 1000000000000 #1 trillion
+    set {_n} to ORmultipleReplace({_n}, ("b", "B", "s", "S", "l", "L", "f", "F", "d" and "D"), "")
+    set {_nSplit::*} to {_n} split at "E"
+    if size of {_nSplit::*} = 2:
+        return 10 ^ {_nSplit::2} parsed as integer
+    return {_n} parsed as number
+
+function ORremoveColonSpecifier(s: string) :: string:
+    set {_sSplit::*} to {_s} split at ""
+    if {_sSplit::*} contains ":":
+        if {_sSplit::1} != "/":
+            set {_sSplit::1} to "@"
+        loop size of {_sSplit::*} times:
+            if {_sSplit::%loop-value + 1%} != ":":
+                set {_sSplit::%loop-value + 1%} to "@"
+            else:
+                set {_sSplit::%loop-value + 1%} to "@"
+                exit loop
+        set {_s} to ""
+        loop size of {_sSplit::*} times:
+            if {_sSplit::%loop-value%} != "@":
+                set {_s} to "%{_s}%%{_sSplit::%loop-value%}%"
+    return {_s}
+
+function ORmultipleReplace(s: string, f: strings, t: string) :: string:
+    loop size of {_f::*} times:
+        replace all {_f::%loop-value%} with {_t} in {_s}
+    return {_s}
+
+function ORlawfulPlayerSelector(u: string, ps: string, i: integer) :: boolean:
+    if {_i} = 1:
+        if {_ps} = "":
+            return true
+    if {_ps} = "%{_u} parsed as player%":
+        return true
+    set {_ps} to ORmultipleReplace({_ps}, ("[", "]", "," and "="), " ")
+    set {_psSplit::*} to {_ps} split at " "
+    if {_psSplit::*} contains "type":
+        loop size of {_psSplit::*} times:
+            if {_psSplit::%loop-value%} = "type":
+                add {_psSplit::%loop-value + 1%} to {_tList::*}
+        loop size of {_tList::*} times:
+            if {_tList::%loop-value%} != "player" or "minecraft:player":
+                if first character of {_tList::%loop-value%} = "!":
+                    replace all "!" with "" in {_tList::%loop-value%}
+                    if {_tList::%loop-value%} = "player" or "minecraft:player":
+                        return true
+                else:
+                    return true
+    return false
+
+function ORfixListWithHole(list: objects) :: objects:
+    loop size of {_list::*} times:
+        if {_list::%loop-value%} is not set:
+            loop size of {_list::*} - loop-value-1 + 1 times:
+                set {_list::%loop-value-1 + (loop-value-2) - 1%} to {_list::%loop-value-1 + loop-value-2%}
+            exit loop
+    return {_list::*}
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Auto Announce
+
+on load:
+    set {ORg::autoAnnounce::timespan} to 5 #minutes
+
+    delete {ORg::autoAnnounce::announcements::*}
+    add "Check out our Discord: <tooltip:&f&l↓ <##17ff8b>Click Here &f&l↓><link:https://discord.gg/YpWHHK3Z8x>&b&nhttps://discord.gg/YpWHHK3Z8x" to {ORg::autoAnnounce::announcements::*}
+    add "Use the command {@C2}/kit <save/load> <(kit)>{@C3} to store items for everyone to use." to {ORg::autoAnnounce::announcements::*}
+    add "Use the commands {@C2}/sethome <(home)>{@C3} and {@C2}/home <(home)>{@C3} to teleport to saved locations." to {ORg::autoAnnounce::announcements::*}
+    add "Use the commands {@C2}/saveinventory <(inventory)>{@C3} and {@C2}/loadinventory <(inventory)>{@C3} to save all the items in your inventory." to {ORg::autoAnnounce::announcements::*}
+    add "We have an adminlist which is viewable with {@C2}/adminlist{@C3}. To become an admin, apply in the Discord with {@C2}/discord{@C3}." to {ORg::autoAnnounce::announcements::*}
+    add "This server has no rules. However, be cautious as it is up to an admin's discretion to punish you." to {ORg::autoAnnounce::announcements::*}
+    add "This server grants all players OP legitimately. Restrictions are applied to provide a ""playable"" experience." to {ORg::autoAnnounce::announcements::*}
+    add "If you feel like coming back to this server, feel free to {@C2}/favorite" to {ORg::autoAnnounce::announcements::*}
+    add "Check out these other Free OP servers: {@C2}play.totalfreedom.tf{@C3}, {@C2}kaboom.pw{@C3}, {@C2}mcfreedom.eu" to {ORg::autoAnnounce::announcements::*}
+
+every minute:
+    add 1 to {ORg::autoAnnounce::timeCounter}
+    if {ORg::autoAnnounce::timeCounter} >= {ORg::autoAnnounce::timespan}:
+        set {ORg::autoAnnounce::timeCounter} to 0
+        if {ORg::autoAnnounce::previousRandomInteger} is not set:
+            set {ORg::autoAnnounce::previousRandomInteger} to 1
+        set {_randomInteger} to {ORg::autoAnnounce::previousRandomInteger}
+        if size of {ORg::autoAnnounce::announcements::*} != 1:
+            while {_randomInteger} = {ORg::autoAnnounce::previousRandomInteger}:
+                set {_randomInteger} to random integer between 1 and size of {ORg::autoAnnounce::announcements::*}
+        set {ORg::autoAnnounce::previousRandomInteger} to {_randomInteger}
+        broadcast formatted "%{ORg::prefix}% {@C3}%{ORg::autoAnnounce::announcements::%{_randomInteger}%}%%nl%"
+        play sound "block.note_block.pling" to all players
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Spawn
+
+command /spawn [<string>]:
+    trigger:
+        set {_x} to x-coordinate of {ORg::spawn::location}
+        set {_y} to y-coordinate of {ORg::spawn::location}
+        set {_z} to z-coordinate of {ORg::spawn::location}
+        set {_w} to world of {ORg::spawn::location}
+        if arg-1 is set:
+            set {_u} to uuid of player
+            if ORadminPermission({_u}) = false:
+                send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command argument."
+                stop
+            if arg-1 = "all" or "a":
+                set {_spawnPlayers::*} to all players
+                send formatted "%{ORg::prefix}% {@C3}You teleported {@C2}all players{@C3} to spawn, which is located at the coordinate {@C2}(%{_x}%, %{_y}%, %{_z}%){@C3} in ""{@C2}%{_w}%{@C3}""."
+            else if arg-1 parsed as player is set:
+                add arg-1 parsed as player to {_spawnPlayers::*}
+                send formatted "%{ORg::prefix}% {@C3}You teleported {@C2}%arg-1 parsed as player%{@C3} to spawn, which is located at the coordinate {@C2}(%{_x}%, %{_y}%, %{_z}%){@C3} in ""{@C2}%{_w}%{@C3}""."
+                play sound {ORg::sound::good}
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /spawn [all/(player)]"
+                stop
+        else:
+            add player to {_spawnPlayers::*}
+        loop size of {_spawnPlayers::*} times:
+            if {ORg::spawn::location} is not set:
+                set {ORg::spawn::location} to location(0, -60, 0, "world")
+            teleport {_spawnPlayers::%loop-value%} to {ORg::spawn::location}
+            send formatted "%{ORg::prefix}% {@C3}You have been teleported to spawn, which is located at the coordinate {@C2}(%{_x}%, %{_y}%, %{_z}%){@C3} in ""{@C2}%{_w}%{@C3}""." to {_spawnPlayers::%loop-value%}
+            play sound {ORg::sound::good} to {_spawnPlayers::%loop-value%}
+
+command /setspawn:
+    trigger:
+        set {_u} to uuid of player
+        if ORadminPermission({_u}) = false:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+            stop
+        set {_x} to rounded down x-coordinate of location of player
+        set {_y} to rounded down y-coordinate of location of player
+        set {_z} to rounded down z-coordinate of location of player
+        set {_w} to world of location of player
+        ORsetSpawn(location({_x}, {_y}, {_z}, {_w}))
+        send formatted "%{ORg::prefix}% {@C3}You set a new spawn location at the coordinate {@C2}(%{_x}%, %{_y}%, %{_z}%){@C3} in ""{@C2}%{_w}%{@C3}""."
+        play sound {ORg::sound::good}
+
+on join:
+    ORsetSpawnPointAtSpawn("%player%")
+    teleport player to {ORg::spawn::location}
+    clear inventory of player
+
+function ORsetSpawn(loc: location):
+    set {_x} to x-coordinate of {_loc}
+    set {_y} to y-coordinate of {_loc}
+    set {_z} to z-coordinate of {_loc}
+    set {_w} to world of {_loc}
+    set {ORg::spawn::location} to location({_x} + 0.5, {_y}, {_z} + 0.5, {_w}, -180, 0)
+    set spawn point of {_w} to {ORg::spawn::location}
+    ORsetSpawnPointAtSpawn("all")
+
+function ORsetSpawnPointAtSpawn(p: string):
+    if {_p} = "all" or "a":
+        loop all players:
+            add loop-player to {_effectedPlayers::*}
+    else:
+        add {_p} parsed as player to {_effectedPlayers::*}
+    loop size of {_effectedPlayers::*} times:
+        set bed location of {_effectedPlayers::%loop-value%} to {ORg::spawn::location}
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Spawner Fix - By: Jiscaskalov
+
+on load:
+    set {ORg::spawnerFix::spawnerMaxEntities} to 500
+    set {ORg::spawnerFix::spawnerTickingRate} to 20 #ticks
+
+every tick:
+    add 1 to {ORg::spawnerFix::tickingRateCounter}
+    if {ORg::spawnerFix::tickingRateCounter} >= {ORg::spawnerFix::spawnerTickingRate}:
+        set {ORg::spawnerFix::tickingRateCounter} to 0
+        set {ORg::spawnerFix::spawnerTally} to 0
+
+on SpawnerSpawnEvent:
+    if {ORg::spawnerFix::spawnerTally} >= {ORg::spawnerFix::spawnerMaxEntities}:
+        cancel event
+    else:
+        add 1 to {ORg::spawnerFix::spawnerTally}
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Tab - By: Robaas
+
+on load:
+    delete {ORg::tab::header::*}
+    delete {ORg::tab::footer::*}
+
+    add nl to {ORg::tab::header::*}
+    add "     <##f50000>◼◼◼ ◼◼◼   ◼◼◼ ◼◼◼  ◼◼ ◼◼◼ ◼◼◼ ◼◼◼     %nl%" to {ORg::tab::header::*}
+    add "▊ ▊ ▊ ▊   ▊ ▊ ▊   ▊   ▊ ▊ ▊ ▊  ▊ %nl%" to {ORg::tab::header::*}
+    add "▊ ▊ ▊◼▊   ▊▊  ▊◼◼  ▊◼ ▊ ▊ ▊▊   ▊ %nl%" to {ORg::tab::header::*}
+    add "▊◼▊ ▊     ▊ ▊ ▊◼◼ ◼◼▊ ▊◼▊ ▊ ▊  ▊ %nl%" to {ORg::tab::header::*}
+    add "<##e30000>&l———————————————%nl%" to {ORg::tab::header::*}
+    add "&7opresort.minehut.gg%nl%" to {ORg::tab::header::*}
+    add "&7/discord (YpWHHK3Z8x)%nl%" to {ORg::tab::header::*}
+    add nl to {ORg::tab::header::*}
+    add "&fONLINE: {@C2}(@numberOfPlayers@{@C2}/@maxPlayerCount@{@C2})%nl%" to {ORg::tab::header::*}
+    add nl to {ORg::tab::header::*}
+    add "&fTPS: @tpsWithColor@%nl%" to {ORg::tab::header::*}
+    add "&fPING: @ping@%nl%" to {ORg::tab::header::*}
+
+    add " " to {ORg::tab::footer::*}
+
+every second:
+    set {_header} to ""
+    set {_footer} to ""
+    loop size of {ORg::tab::header::*} times:
+        set {_header} to "%{_header}%%{ORg::tab::header::%loop-value%}%"
+    loop size of {ORg::tab::footer::*} times:
+        set {_footer} to "%{_footer}%%{ORg::tab::footer::%loop-value%}%"
+
+    loop all players:
+        set {_headerFooter} to "%{_header}%@split@%{_footer}%"
+        replace all "@ping@" with "<##ffff00>%ping of loop-player%" in {_headerFooter}
+        set {_tps} to tps from last 1 minute
+        if {_headerFooter} contains "@tpsWithColor@":
+            if {_tps} >= 19.9:
+                set {_tpsColor} to "<##04ff00>"
+            else if {_tps} >= 19:
+                set {_tpsColor} to "<##8cff00>"
+            else if {_tps} >= 17.5:
+                set {_tpsColor} to "<##ddff00>"
+            else if {_tps} >= 14:
+                set {_tpsColor} to "<##ffd900>"
+            else if {_tps} >= 11:
+                set {_tpsColor} to "<##ff7733>"
+            else if {_tps} >= 8:
+                set {_tpsColor} to "<##ff513d>"
+            else:
+                set {_tpsColor} to "<##ff0000>"
+            replace all "@tpsWithColor@" with "%{_tpsColor}%%{_tps}%" in {_headerFooter}
+        else:
+            replace all "@tps@" with "%{_tps}%" in {_headerFooter}
+        replace all "@numberOfPlayers@" with "%number of all players%" in {_headerFooter}
+        replace all "@maxPlayerCount@" with "%max player count%" in {_headerFooter}
+        set {_headerFooterSplit::*} to {_headerFooter} split at "@split@"
+
+        set loop-player's tablist header to {_headerFooterSplit::1}
+        set loop-player's tablist footer to {_headerFooterSplit::2}
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Shortcut Gamemode Commands - By: ShadowBane21
+
+command /gmc:
+    trigger:
+        execute console command "/execute as %player% run gamemode creative %player%"
+
+command /gms:
+    trigger:
+        execute console command "/execute as %player% run gamemode survival %player%"
+
+command /gma:
+    trigger:
+        execute console command "/execute as %player% run gamemode adventure %player%"
+
+command /gmsp:
+    trigger:
+        execute console command "/execute as %player% run gamemode spectator %player%"
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Command Spy
+
+/commandspy chat player
+/commandspy chat player true
+/commandspy chat player false
+/commandspy chat commandblock
+/commandspy chat commandblock true
+/commandspy chat commandblock false
+/commandspy chat console
+/commandspy chat console true
+/commandspy chat console false
+/commandspy menu
+/commandspy menu player
+/commandspy menu commandblock
+/commandspy menu console
+/commandspy option commandblock teleport <CBID>
+/commandspy option commandblock unmark <CBID>
+/commandspy option commandblock unmark all
+/commandspy option commandblock mark <CBID>
+/commandspy option commandblock mark all
+/commandspy option commandblock remove <CBID>
+/commandspy option commandblock remove all
+/commandspy option commandblock remove unmarked
+/commandspy option commandblock remove marked
+
+command /commandspy [<string>] [<string>] [<string>] [<string>] [<string>]:
+    aliases: /cms
+    trigger:
+        set {_u} to ORsenderUuidAssignment(sender, player)
+        if ORadminPermission({_u}) = false:
+            send formatted "%ORassignPrefix({_u})% {@C4}You do not have permission to use this command."
+            stop
+        
+        if arg-1 is not set:
+            send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy <chat/menu/option>"
+            stop
+
+        if arg-1 = "chat" or "c":
+            if arg-2 is not set:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy chat <player/commandblock/console>"
+                stop
+
+            if arg-2 = "player" or "p":
+
+            else if arg-2 = "commandblock" or "cb":
+
+            else if arg-2 = "console" or "c":
+
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy chat <player/commandblock/console>"
+                stop
+
+            if arg-4 is set:
+                if arg-4 = "true" or "t":
+
+                else if arg-4 = "false" or "f":
+
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy chat <> [<true/false>]"
+                    stop
+        else if arg-1 = "menu" or "m":
+            if arg-2 is not set:
+
+            else:
+                if arg-2 = "player" or "p":
+
+                else if arg-2 = "commandblock" or "cb":
+
+                else if arg-2 = "console" or "c":
+
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy menu [<player/commandblock/console>]"
+                    stop
+        else if arg-1 = "option" or "o":
+            if arg-2 is not set:
+                send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option <commandblock>"
+                stop
+            
+            if arg-2 = "commandblock" or "cb":
+                if arg-3 is not set:
+                    send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option commandblock <teleport/unmark/mark/remove"
+                    stop
+
+                if arg-3 = "teleport" or "t":
+                    if arg-4 is not set:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option commandblock teleport <command-block-ID>"
+                        stop
+
+                    set {_ID} to arg-4
+                    if OR_CMS_teleportToCB(player, {_ID}) = true:
+                        send formatted "%{ORg::prefix}% {@C3}You have teleported to the command block with the command ""{@C2}%OR_shortenedString({OR::CMS::CBData::%{_ID}%::command}, 20)%{@C3}"""
+                        stop
+                    else:
+                        send formatted "%{ORg::prefix}% {@C4}The command block specified to be teleported to does not exist."
+                        stop
+                else if arg-3 = "unmark" or "u":
+                    if arg-4 is not set:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option commandblock unmark <command-block-ID/all>"
+                        stop
+
+                    if arg-4 = "all" or "a":
+                        if OR_CMS_unmarkAllCB() = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have unmarked all command blocks."
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}No command blocks were found to be unmarked."
+                            stop
+                    else:
+                        set {_ID} to arg-4
+                        if OR_CMS_unmarkCB({_ID}) = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have unmarked a command block with the command ""{@C2}%OR_shortenedString({OR::CMS::CBData::%{_ID}%::command}, 20)%{@C3}"""
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}The command block specified to be unmarked does not exist."
+                            stop
+                else if arg-3 = "mark" or "m":
+                    if arg-4 is not set:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option commandblock mark <command-block-ID/all>"
+                        stop
+
+                    if arg-4 = "all" or "a":
+                        if OR_CMS_markAllCB() = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have marked all command blocks."
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}No command blocks were found to be marked."
+                            stop
+                    else:
+                        set {_ID} to arg-4
+                        if OR_CMS_markCB({_ID}) = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have marked a command block with the command ""{@C2}%OR_shortenedString({OR::CMS::CBData::%{_ID}%::command}, 20)%{@C3}"""
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}The command block specified to be marked does not exist."
+                            stop
+                else if arg-3 = "remove" or "r":
+                    if arg-4 is not set:
+                        send formatted "%{ORg::prefix}% {@C4}Unset argument: /commandspy option commandblock remove <command-block-ID/all/unmarked/marked>"
+                        stop
+
+                    if arg-4 = "all" or "a":
+                        if OR_CMS_markAllCB() = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have marked all command blocks."
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}No command blocks were found to be marked."
+                            stop
+                    else:
+                        set {_ID} to arg-4
+                        if OR_CMS_markCB({_ID}) = true:
+                            send formatted "%{ORg::prefix}% {@C3}You have marked a command block with the command ""{@C2}%OR_shortenedString({OR::CMS::CBData::%{_ID}%::command}, 20)%{@C3}"""
+                            stop
+                        else:
+                            send formatted "%{ORg::prefix}% {@C4}The command block specified to be marked does not exist."
+                            stop
+                else:
+                    send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy option commandblock <teleport/unmark/mark/remove"
+                    stop
+            else:
+                send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy option <commandblock>"
+                stop
+        else:
+            send formatted "%{ORg::prefix}% {@C4}Incorrect argument: /commandspy <chat/menu/option>"
+            stop
+
+on place:
+    if OR_CMS_isCBB(event-block) = true:
+        set {_ID} to OR_CMS_getCBBID(location of event-block)
+        set {OR::CMS::CBData::%{_ID}%::player} to "%player%"
+        set {OR::CMS::CBData::%{_ID}%::lastModified} to now
+
+on packet event play_client_set_command_block:
+    set {_location} to field 0
+    set {_ID} to OR_CMS_getCBBID({_location})
+    set {OR::CMS::CBData::%{_ID}%::lastModified} to now
+
+on command:
+    if sender = repeating command block or chain command block or command block or command minecart:
+        if sender = repeating command block or chain command block or command block:
+            set {_ID} to OR_CMS_getCBBID(location of event-block)
+            set {_location} to location of event-block
+
+            if sender = repeating command block:
+                set {_type} to "RCB"
+            else if sender = chain command block:
+                set {_type} to "CCB"
+            else:
+                set {_type} to "CB"
+        else if sender = command minecart:
+            set {_ID} to OR_CMS_getCBEID(event-entity)
+            set {_location} to location of event-entity
+            set {_type} to "CM"
+        
+        set {OR::CMS::CBData::%{_ID}%::type} to {_type}
+        set {OR::CMS::CBData::%{_ID}%::location} to {_location}
+        set {OR::CMS::CBData::%{_ID}%::command} to "/%event-command%"
+        set {OR::CMS::CBData::%{_ID}%::lastExecution} to now
+        if {OR::CMS::CBData::%{_ID}%::firstExecution} is not set:
+            set {OR::CMS::CBData::%{_ID}%::firstExecution} to now
+
+        if {OR::CMS::activeCBs::*} does not contain {_ID}:
+            add {_ID} to {OR::CMS::activeCBs::*}
+
+
+function OR_CMS_isCBB(block: block) :: boolean:
+    if {_block} = command block or repeating command block or chain command block:
+        return true
+    else:
+        return false
+
+function OR_CMS_isCBE(entity: entity) :: boolean:
+    if {_entity} = command minecart:
+        return true
+    else:
+        return false
+
+function OR_CMS_isCBEItemType(itemType: itemtype) :: boolean:
+    if {_itemType} = minecart with command block:
+        return true
+    else:
+        return false
+
+function OR_CMS_getCBBID(location: location) :: string:
+    return "%rounded down x-coordinate of {_location}%|%rounded down y-coordinate of {_location}%|%rounded down z-coordinate of {_location}%|%world of {_location}%"
+
+function OR_CMS_getCBEID(entity: entity) :: string:
+    return uuid of {_entity}
+
+
+function packetSearch(s: string):
+    loop all packettypes:
+        set {_packettype} to lowercase "%loop-value%"
+        {_packettype} contain {_s}
+        send formatted "<suggest command:%{_packettype}%>%{_packettype}%" to all players

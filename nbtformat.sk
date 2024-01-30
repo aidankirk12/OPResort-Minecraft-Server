@@ -1,0 +1,135 @@
+options:
+    FOC1: <##fff700>
+    FOC2: <##fffb5e>
+    FOC3: &7
+    FOC4: &c
+
+on load:
+    set {FOc::prefix} to "{@FOC1}&lFORMAT &8» "
+    set {FOc::sound::good} to "entity.villager.yes"
+    set {FOc::sound::bad} to "entity.villager.no"
+    set {FOc::formatLength::bulletPoint} to 46
+    set {FOc::formatLength::vulnerabilities1} to 34
+    set {FOc::formatLength::vulnerabilities2} to 48
+    set {FOc::loreLineClearAmount} to 30
+
+
+on tab complete:
+    if event-string contains "/format" or "/f":
+        loop all players:
+            add loop-value to {_allPlayers::*}
+        set tab completions for position 1 to {_allPlayers::*}
+        if tab arg-1 parsed as player is set:
+            set tab completions for position 2 to "1"
+
+
+command /format [<string>] [<string>] [<string>]:
+    aliases: /f
+    trigger:
+        if arg-1 is set:
+            set {_player} to arg-1 parsed as player
+            if {_player} is set:
+                if arg-2 is set:
+                    if arg-2 = "1":
+                        if arg-3 is set:
+
+                            loop {FOc::loreLineClearAmount} times:
+                                make {_player} execute command "/ii lore remove 1"
+
+                            set {_stringSplit::*} to arg-3 split at "\n"
+
+                            if first 8 characters of {_stringSplit::1} = "@noName@":
+                                set {_nameType} to "lore add"
+                                replace all "@noName@" with "" in {_stringSplit::1}
+                                make {_player} execute command "/ii name"
+                            else:
+                                set {_nameType} to "name"
+                            
+                            if {_stringSplit::3} = "@cancel@":
+                                make {_player} execute command "/ii %{_nameType}% &8[##00ffe9☻&8] ##8afff5&l%{_stringSplit::1}% &8| &f%{_stringSplit::2}%"
+                            else:
+                                make {_player} execute command "/ii %{_nameType}% &8[##00ffe9☻&8] ##8afff5&l%{_stringSplit::1}% &8| &f%{_stringSplit::2}% &7(%{_stringSplit::3}%)"
+
+                            loop 2 times:
+                                set {_subCategorySplit::*} to {_stringSplit::%loop-value + 3%} split at "\b"
+                                if loop-value = 1:
+                                    make {_player} execute command "/ii lore add &8&m━━━━━━━━━━━━━━━━━"
+                                    make {_player} execute command "/ii lore add ##00ff44→ ##63ff8d&nDescription&8 -"
+                                else:
+                                    if {_subCategorySplit::1} = "@cancel@":
+                                        set {_usageCancel} to true
+                                        exit loop
+                                    else:
+                                        make {_player} execute command "/ii lore add &f"
+                                        make {_player} execute command "/ii lore add ##00ff44→ ##63ff8d&nUsage&8 -"
+                                loop size of {_subCategorySplit::*} times:
+                                    set {_createdBulletPoint} to false
+                                    set {_lineSplit::*} to {_subCategorySplit::%loop-value-2%} split at " "
+                                    set {_lineLength} to 0
+                                    loop size of {_lineSplit::*} times:
+                                        set {_wordLength} to length of {_lineSplit::%loop-value-3%} + 1
+                                        set {_lineLength} to {_lineLength} + {_wordLength}
+                                        if {_lineLength} - 1 > {FOc::formatLength::bulletPoint}:
+                                            set {_createLine} to true
+                                            set {_lineLength} to {_lineLength} - {_wordLength}
+                                        else if loop-value-3 = size of {_lineSplit::*}:
+                                            set {_createLine} to true
+                                        if {_createLine} = true:
+                                            set {_createLine} to false
+                                            set {_line} to first ({_lineLength} - 1) characters of {_subCategorySplit::%loop-value-2%}
+                                            set {_subCategorySplit::%loop-value-2%} to last (length of {_subCategorySplit::%loop-value-2%} - {_lineLength}) characters of {_subCategorySplit::%loop-value-2%}
+                                            set {_lineLength} to {_wordLength}
+                                            if {_createdBulletPoint} = false:
+                                                set {_createdBulletPoint} to true
+                                                make {_player} execute command "/ii lore add &f &8• &7%{_line}%"
+                                            else:
+                                                make {_player} execute command "/ii lore add &f &f &f &7%{_line}%"
+                                            if loop-value-3 = size of {_lineSplit::*}:
+                                                if {_subCategorySplit::%loop-value-2%} is set:
+                                                    make {_player} execute command "/ii lore add &f &f &f &7%{_subCategorySplit::%loop-value-2%}%"
+                            make {_player} execute command "/ii lore add &8&m━━━━━━━━━━━━━━━━━"
+                            if {_usageCancel} is not set:
+                                make {_player} execute command "/ii lore add &f"
+
+                            set {_vulnerabilities} to {_stringSplit::6}
+                            set {_lineSplit::*} to {_vulnerabilities} split at " "
+                            if {_lineSplit::1} != "@cancel@":
+                                set {_lineLength} to 0
+                                set {_lengthCheck} to {FOc::formatLength::vulnerabilities1}
+                                loop size of {_lineSplit::*} times:
+                                    set {_wordLength} to length of {_lineSplit::%loop-value%} + 1
+                                    set {_lineLength} to {_lineLength} + {_wordLength}
+                                    if {_lineLength} - 1 > {_lengthCheck}:
+                                        set {_createLine} to true
+                                        set {_lineLength} to {_lineLength} - {_wordLength}
+                                    else if loop-value = size of {_lineSplit::*}:
+                                        make {_player} execute command "/ii lore add &8&l| &7&o%{_vulnerabilities}%"
+                                    if {_createLine} = true:
+                                        set {_createLine} to false
+                                        set {_line} to first ({_lineLength} - 1) characters of {_vulnerabilities}
+                                        set {_vulnerabilities} to last (length of {_vulnerabilities} - {_lineLength}) characters of {_vulnerabilities}
+                                        replace all "," with "&f,&7&o" in {_line}
+                                        replace all "." with "&f." in {_line}
+                                        set {_lineLength} to {_wordLength}
+                                        if {_createdVulnerabilities1} is not set:
+                                            set {_createdVulnerabilities1} to true
+                                            set {_lengthCheck} to {FOc::formatLength::vulnerabilities2}
+                                            make {_player} execute command "/ii lore add &8&l| &f&nVULNERABILITES&8 : &7&o%{_line}%"
+                                        else:
+                                            make {_player} execute command "/ii lore add &8&l| &7&o%{_line}%"
+                                        if loop-value = size of {_lineSplit::*}:
+                                            if {_vulnerabilities} is set:
+                                                make {_player} execute command "/ii lore add &8&l| &7&o%{_vulnerabilities}%"
+                            make {_player} execute command "/ii lore add &f"
+                            make {_player} execute command "/ii lore add &7 Updated: &f%{_stringSplit::7}%"
+                            make {_player} execute command "/ii lore add &7 By: ##00ffe9Captainclimber &8(Discord: &ocaptainclimber&8)"
+                        else:
+                            send "%{FOc::prefix}% {@FOC4}Unset argument: /format <player> <format-type> <format-string>"
+                    else:
+                        send "%{FOc::prefix}% {@FOC4}Unknown format type: /format <player> <1>"
+                else:
+                    send "%{FOc::prefix}% {@FOC4}Unset argument: /format <player> <format-type>"
+            else:
+                send "%{FOc::prefix}% {@FOC4}Unknown player: /format <player>"
+        else:
+            send "%{FOc::prefix}% {@FOC4}Unset argument: /format <player>"

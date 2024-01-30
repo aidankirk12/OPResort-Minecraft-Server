@@ -1,0 +1,70 @@
+options:
+    homeC1: <##ff6f00>
+    homeC2: <##ff9d52>
+    homeC3: &7
+    homeC4: &c
+    homeC5: &8
+
+on load:
+    set {home::prefix} to "{@homeC1}&lHOMES {@homeC5}» "
+    set {home::sound::good} to "entity.villager.yes"
+    set {home::sound::bad} to "entity.villager.no"
+
+
+on tab complete:
+    set {_u} to player's uuid
+    if event-string contains "/home" or "/delhome":
+        set tab completions for position 1 to {home::%{_u}%::names::*}
+
+
+command /sethome [<string>]:
+    trigger:
+        set {_u} to player's uuid
+        if player is op:
+            if arg-1 is set:
+                set {home::%{_u}%::%arg-1%::location} to location of block at location of player
+                if {home::%{_u}%::names::*} contains arg-1:
+                    send "%{home::prefix}%{@homeC3}Home {@homeC2}%arg-1%{@homeC3} overridden! Do {@homeC2}/home %arg-1%{@homeC3} to go to this home."
+                else:
+                    add arg-1 to {home::%{_u}%::names::*}
+                    send "%{home::prefix}%{@homeC3}Home {@homeC2}%arg-1%{@homeC3} set! Do {@homeC2}/home %arg-1%{@homeC3} to go to this home."
+                play sound {home::sound::good}
+            else:
+                send "%{home::prefix}%{@homeC4}Unset argument: /sethome <name>"
+        else:
+            send "%{home::prefix}%{@homeC4}You must have OP to use this command."
+
+command /delhome [<string>]:
+    trigger:
+        set {_u} to player's uuid
+        if player is op:
+            if arg-1 is set:
+                if {home::%{_u}%::names::*} contains arg-1:
+                    remove arg-1 from {home::%{_u}%::names::*}
+                    send "%{home::prefix}%{@homeC3}Home {@homeC2}%arg-1%{@homeC3} removed."
+                    play sound {home::sound::good}
+                else:
+                    send "%{home::prefix}%{@homeC3}The home {@homeC2}%arg-1%{@homeC3} does not exist."
+                    play sound {home::sound::bad}
+            else:
+                send "%{home::prefix}%{@homeC4}Unset argument: /delhome <name>"
+        else:
+            send "%{home::prefix}%{@homeC4}You must have OP to use this command."
+
+command /home [<string>]:
+    trigger:
+        set {_u} to player's uuid
+        if player is op:
+            if arg-1 is set:
+                if {home::%{_u}%::names::*} contains arg-1:
+                    teleport player to {home::%{_u}%::%arg-1%::location}
+                    send "%{home::prefix}%{@homeC3}Teleported to home {@homeC2}%arg-1%{@homeC3}!"
+                    play sound {home::sound::good}
+                else:
+                    send "%{home::prefix}%{@homeC3}The home {@homeC2}%arg-1%{@homeC3} does not exist."
+                    play sound {home::sound::bad}
+            else:
+                send "%{home::prefix}%{@homeC4}Unset argument: /home <name>"
+        else:
+            send "%{home::prefix}%{@homeC4}You must have OP to use this command."
+        

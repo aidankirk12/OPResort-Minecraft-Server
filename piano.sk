@@ -1,0 +1,332 @@
+options:
+    PIC1: <##ffc800>
+    PIC2: <##fff942>
+    PIC3: &7
+    PIC4: &c
+    PIC5: &8
+    PIC6: &f
+    PIC7: <##ffa600>
+
+on load:
+    set {PI::prefix} to "{@PIC1}&lPIANO {@PIC5}» "
+    if {PI::disablePiano} is not set:
+        set {PI::disablePiano} to false
+    set {PI::default::volume} to 6
+    set {PI::default::octave::1::soundType} to 1
+    set {PI::default::octave::1::octaveType} to 1
+    set {PI::default::octave::2::soundType} to 1
+    set {PI::default::octave::2::octaveType} to 2
+    set {PI::default::octave::3::soundType} to 6
+    set {PI::default::octave::3::octaveType} to 2
+    
+    set {PI::volumes::display::*} to "pp", "p", "mp", "mf", "f" and "ff"
+    set {PI::keys::display::*} to "C", "C##", "D", "D##", "E", "F", "F##", "G", "G##", "A", "A##" and "B"
+    set {PI::soundTypes::ID::*} to "harp", "bass", "snare", "hat", "basedrum", "bell", "flute", "chime", "guitar", "xylophone", "iron_xylophone", "cow_bell", "didgeridoo", "bit", "banjo" and "pling"
+    set {PI::soundTypes::item::*} to grass block, oak planks, sand, glass, stone, gold block, clay block, packed ice, white wool, bone block, iron block, soul sand, pumpkin, emerald block, east-west hay block and glowstone
+    set {PI::soundTypes::display::*} to "Piano", "Bass", "Snare Drum", "Hihat", "Bass Drum", "Bells", "Flute", "Chimes", "Guitar", "Xylophone", "Vibraphone", "Cow Bell", "Didgeridoo", "Bit", "Banjo" and "Electric Piano"
+    set {PI::octaveTypes::item::*} to book and knowledge book
+    set {PI::octaveTypes::display::*} to "Low" and "High"
+    set {PI::pitches::*} to 0.5, 0.529732, 0.561231, 0.594604, 0.629961, 0.667420, 0.707107, 0.749154, 0.793701, 0.840896, 0.890899, 0.943874, 1, 1.059463, 1.122462, 1.189207, 1.259921, 1.334840, 1.414214, 1.498307, 1.587401, 1.681793, 1.781797, 1.887749 and 2
+
+    set {PI::inventory::name} to "&0  ♫  ♭  ♪   {@PIC5}» {@PIC7}&l&nPIANO{@PIC5} «&0   ♩  ♯  ♬"
+    set {PI::inventory::rows} to 6
+    set {PI::volume::6::item} to red dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&off" with lore " {@PIC5}- {@PIC2}Very loud" #volume
+    set {PI::volume::6::slot} to 0
+    set {PI::volume::5::item} to orange dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&of" with lore " {@PIC5}- {@PIC2}Loud" #volume
+    set {PI::volume::5::slot} to 9
+    set {PI::volume::4::item} to yellow dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&omf" with lore " {@PIC5}- {@PIC2}Medium loud" #volume
+    set {PI::volume::4::slot} to 18
+    set {PI::volume::3::item} to light blue dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&omp" with lore " {@PIC5}- {@PIC2}Medium quiet" #volume
+    set {PI::volume::3::slot} to 27
+    set {PI::volume::2::item} to cyan dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&op" with lore " {@PIC5}- {@PIC2}Quiet" #volume
+    set {PI::volume::2::slot} to 36
+    set {PI::volume::1::item} to blue dye named " {@PIC6}• {@PIC3}Set volume: {@PIC1}&opp" with lore " {@PIC5}- {@PIC2}Very quiet" #volume
+    set {PI::volume::1::slot} to 45
+    set {PI::key::white::item} to white concrete named "@key@" #key
+    set {PI::key::black::item} to black concrete named "@key@" #key
+    set {PI::octave::1::key::1::slot} to 10
+    set {PI::octave::1::key::2::slot} to 2
+    set {PI::octave::1::key::3::slot} to 11
+    set {PI::octave::1::key::4::slot} to 3
+    set {PI::octave::1::key::5::slot} to 12
+    set {PI::octave::1::key::6::slot} to 13
+    set {PI::octave::1::key::7::slot} to 5
+    set {PI::octave::1::key::8::slot} to 14
+    set {PI::octave::1::key::9::slot} to 6
+    set {PI::octave::1::key::10::slot} to 15
+    set {PI::octave::1::key::11::slot} to 7
+    set {PI::octave::1::key::12::slot} to 16
+    set {PI::octave::1::soundType::name} to " {@PIC6}• {@PIC3}Change instrument:" #instrument
+    set {PI::octave::1::soundType::lore} to " {@PIC5}- {@PIC2}Current instrument: {@PIC1}@instrument@" #instrument
+    set {PI::octave::1::soundType::slot} to 8
+    set {PI::octave::1::octaveType::name} to " {@PIC6}• {@PIC3}Change octave:" #octave
+    set {PI::octave::1::octaveType::lore} to " {@PIC5}- {@PIC2}Current octave: {@PIC1}@octave@" #octave
+    set {PI::octave::1::octaveType::slot} to 17
+    set {PI::octave::2::key::1::slot} to 28
+    set {PI::octave::2::key::2::slot} to 20
+    set {PI::octave::2::key::3::slot} to 29
+    set {PI::octave::2::key::4::slot} to 21
+    set {PI::octave::2::key::5::slot} to 30
+    set {PI::octave::2::key::6::slot} to 31
+    set {PI::octave::2::key::7::slot} to 23
+    set {PI::octave::2::key::8::slot} to 32
+    set {PI::octave::2::key::9::slot} to 24
+    set {PI::octave::2::key::10::slot} to 33
+    set {PI::octave::2::key::11::slot} to 25
+    set {PI::octave::2::key::12::slot} to 34
+    set {PI::octave::2::soundType::name} to " {@PIC6}• {@PIC3}Change instrument:" #instrument
+    set {PI::octave::2::soundType::lore} to " {@PIC5}- {@PIC2}Current instrument: {@PIC1}@instrument@" 
+    set {PI::octave::2::soundType::slot} to 26
+    set {PI::octave::2::octaveType::name} to " {@PIC6}• {@PIC3}Change octave:" #octave
+    set {PI::octave::2::octaveType::lore} to " {@PIC5}- {@PIC2}Current octave: {@PIC1}@octave@" #octave
+    set {PI::octave::2::octaveType::slot} to 35
+    set {PI::octave::3::key::1::slot} to 46
+    set {PI::octave::3::key::2::slot} to 38
+    set {PI::octave::3::key::3::slot} to 47
+    set {PI::octave::3::key::4::slot} to 39
+    set {PI::octave::3::key::5::slot} to 48
+    set {PI::octave::3::key::6::slot} to 49
+    set {PI::octave::3::key::7::slot} to 41
+    set {PI::octave::3::key::8::slot} to 50
+    set {PI::octave::3::key::9::slot} to 42
+    set {PI::octave::3::key::10::slot} to 51
+    set {PI::octave::3::key::11::slot} to 43
+    set {PI::octave::3::key::12::slot} to 52
+    set {PI::octave::3::soundType::name} to " {@PIC6}• {@PIC3}Change instrument:" #instrument
+    set {PI::octave::3::soundType::lore} to " {@PIC5}- {@PIC2}Current instrument: {@PIC1}@instrument@" 
+    set {PI::octave::3::soundType::slot} to 44
+    set {PI::octave::3::octaveType::name} to " {@PIC6}• {@PIC3}Change octave:" #octave
+    set {PI::octave::3::octaveType::lore} to " {@PIC5}- {@PIC2}Current octave: {@PIC1}@octave@" #octave
+    set {PI::octave::3::octaveType::slot} to 53
+
+    set {PI::soundType::name} to "&0  ♫  ♭  ♪   {@PIC5}» {@PIC7}&l&nPIANO{@PIC5} «&0   ♩  ♯  ♬"
+    set {PI::soundType::rows} to 4
+    set {PI::soundType::back::item} to red stained glass pane named "&c&lGO BACK"
+    set {PI::soundType::back::slot} to 31
+    set {PI::soundType::instrument::name} to " {@PIC6}• {@PIC3}Set instrument: {@PIC1}@instrument@" #instrument
+    delete {PI::soundType::placeHolder::*}
+    set {PI::soundType::placeHolder::0} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::1} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::2} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::3} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::4} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::5} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::6} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::7} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::8} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::27} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::28} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::29} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::30} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::32} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::33} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::34} to black stained glass pane named " "
+    set {PI::soundType::placeHolder::35} to black stained glass pane named " "
+
+
+on join:
+    set {_u} to player's uuid
+    if {PI::%{_u}%::volume} is not set:
+        set {PI::%{_u}%::volume} to {PI::default::volume}
+    loop 3 times:
+        if {PI::%{_u}%::octave::%loop-value%::soundType} is not set:
+            set {PI::%{_u}%::octave::%loop-value%::soundType} to {PI::default::octave::%loop-value%::soundType}
+        if {PI::%{_u}%::octave::%loop-value%::octaveType} is not set:
+            set {PI::%{_u}%::octave::%loop-value%::octaveType} to {PI::default::octave::%loop-value%::octaveType}
+
+on inventory click:
+    set {_u} to player's uuid
+    if event-clicktype != double click using mouse:
+        if event-inventory = metadata tag "PI::inventory" of player:
+            cancel event
+            loop 6 times:
+                if index of event-slot = {PI::volume::%loop-value%::slot}:
+                    set {PI::%{_u}%::volume} to loop-value
+                    play sound "block.note_block.harp" with volume {PI::%{_u}%::volume} * 0.1666667 with pitch 0.5
+                    play sound "block.note_block.harp" with volume {PI::%{_u}%::volume} * 0.1666667 with pitch 0.594604
+                    play sound "block.note_block.harp" with volume {PI::%{_u}%::volume} * 0.1666667 with pitch 0.749154
+                    PIupdateInventoryVolume(player)
+                    stop
+            loop 3 times:
+                if index of event-slot = {PI::octave::%loop-value%::soundType::slot}:
+                    play sound "block.note_block.harp" with pitch 0.629961
+                    play sound "block.note_block.harp" with pitch 0.707107
+                    play sound "block.note_block.harp" with pitch 0.890899
+                    PIopenInventorySoundType(player, "%loop-value%" parsed as integer)
+                    stop
+                else if index of event-slot = {PI::octave::%loop-value%::octaveType::slot}:
+                    if {PI::%{_u}%::octave::%loop-value%::octaveType} = 1:
+                        set {PI::%{_u}%::octave::%loop-value%::octaveType} to 2
+                        play sound "block.note_block.harp" with pitch 1.122462
+                        play sound "block.note_block.harp" with pitch 1.414214
+                    else:
+                        set {PI::%{_u}%::octave::%loop-value%::octaveType} to 1
+                        play sound "block.note_block.harp" with pitch 0.561231
+                        play sound "block.note_block.harp" with pitch 0.707107
+                    PIupdateInventoryOctaveType(player)
+                    stop
+                loop 12 times:
+                    if index of event-slot = {PI::octave::%loop-value-1%::key::%loop-value-2%::slot}:
+                        set {_tempNumber} to loop-value-2 + 12 * ({PI::%{_u}%::octave::%loop-value-1%::octaveType} - 1)
+                        play sound "block.note_block.%{PI::soundTypes::ID::%{PI::%{_u}%::octave::%loop-value-1%::soundType}%}%" with volume {PI::%{_u}%::volume} * 0.1666667 with pitch {PI::pitches::%{_tempNumber}%} at location of player
+                        stop
+        loop 3 times:
+            if event-inventory = metadata tag "PI::soundType::%loop-value%" of player:
+                cancel event
+                if index of event-slot = {PI::soundType::back::slot}:
+                    PIopenInventory(player)
+                    stop
+                loop size of {PI::soundTypes::ID::*} times:
+                    if index of event-slot = loop-value-2 + 8:
+                        set {PI::%{_u}%::octave::%loop-value-1%::soundType} to loop-value-2
+                        play sound "block.note_block.%{PI::soundTypes::ID::%{PI::%{_u}%::octave::%loop-value-1%::soundType}%}%" with pitch 1.189207
+                        play sound "block.note_block.%{PI::soundTypes::ID::%{PI::%{_u}%::octave::%loop-value-1%::soundType}%}%" with pitch 1.587401
+                        PIupdateInventorySoundTypeInstrument(player, "%loop-value-1%" parsed as integer)
+                        stop
+
+
+command /piano:
+    trigger:
+        if player is op:
+            set {_execute1} to true
+        else if player has permission "skript.piano":
+            set {_execute1} to true
+        else:
+            if {PI::disablePiano} = true:
+                send "%{PI::prefix}%{@PIC3}Piano is currently {@PIC2}disabled{@PIC3}."
+            else:
+                set {_execute1} to true
+        if {_execute1} = true:
+            send "%{PI::prefix}%{@PIC3}Opening {@PIC2}piano{@PIC3}:"
+            PIopenInventory(player)
+
+command /enablepiano:
+    trigger:
+        if player is op:
+            set {_execute1} to true
+        else if player has permission "skript.enablepiano":
+            set {_execute1} to true
+        else:
+            send "%{PI::prefix}%{@PIC4}You must have OP or the permission ""skript.enablepiano"" to use this command."
+        if {_execute1} = true:
+            set {PI::disablePiano} to false
+            send "%{PI::prefix}%{@PIC3}Piano has been {@PIC2}enabled{@PIC3} for all players. Disable piano with {@PIC2}/disablepiano"
+            play sound "entity.villager.yes"
+
+command /disablepiano:
+    trigger:
+        if player is op:
+            set {_execute1} to true
+        else if player has permission "skript.disablepiano":
+            set {_execute1} to true
+        else:
+            send "%{PI::prefix}%{@PIC4}You must have OP or the permission ""skript.disablepiano"" to use this command."
+        if {_execute1} = true:
+            set {PI::disablePiano} to true
+            send "%{PI::prefix}%{@PIC3}Piano has been {@PIC2}disabled{@PIC3} for all players who do not have OP or the permission ""{@PIC2}skript.piano{@PIC3}"". Re-enable piano with {@PIC2}/enablepiano"
+            play sound "entity.villager.yes"
+
+command /togglepiano:
+    trigger:
+        if player is op:
+            set {_execute1} to true
+        else if player has permission "skript.togglepiano":
+            set {_execute1} to true
+        else:
+            send "%{PI::prefix}%{@PIC4}You must have OP or the permission ""skript.togglepiano"" to use this command."
+        if {_execute1} = true:
+            if {PI::disablePiano} = true:
+                set {PI::disablePiano} to false
+                send "%{PI::prefix}%{@PIC3}Piano has been {@PIC2}enabled{@PIC3} for all players. Disable piano with {@PIC2}/disablepiano"
+            else:
+                set {PI::disablePiano} to true
+                send "%{PI::prefix}%{@PIC3}Piano has been {@PIC2}disabled{@PIC3} for all players who do not have OP or the permission ""{@PIC2}skript.piano{@PIC3}"". Re-enable piano with {@PIC2}/enablepiano"
+            play sound "entity.villager.yes"
+
+command /pianoinfo:
+    trigger:
+        send "%{PI::prefix}%{@PIC3}Virtual Piano is a skript made by {@PIC2}Captainclimber{@PIC3}. For more info, contact {@PIC2}Captainclimber##6610{@PIC3}."
+        play sound "entity.villager.yes"
+
+
+
+function PIopenInventory(p: player):
+    set {_u} to {_p}'s uuid
+    play sound "block.note_block.harp" with pitch 0.5 to {_p}
+    play sound "block.note_block.harp" with pitch 0.629961 to {_p}
+    play sound "block.note_block.harp" with pitch 0.749154 to {_p}
+    play sound "block.note_block.harp" with pitch 1 to {_p}
+    set metadata tag "PI::inventory" of {_p} to chest inventory with {PI::inventory::rows} rows named {PI::inventory::name}
+    PIupdateInventoryVolume({_p})
+    loop 3 times:
+        set {_keySlotList::*} to 1, 3, 5, 6, 8, 10 and 12
+        loop {_keySlotList::*}:
+            set {_tempItem} to type of {PI::key::white::item}
+            set {_tempName} to name of {PI::key::white::item}
+            replace all "@key@" with "%{PI::keys::display::%loop-value-2%}%&%loop-value-1%" in {_tempName}
+            set {_tempName} to colored {_tempName}
+            set slot {PI::octave::%loop-value-1%::key::%loop-value-2%::slot} of metadata tag "PI::inventory" of {_p} to {_tempItem} with name {_tempName}
+        set {_keySlotList::*} to 2, 4, 7, 9 and 11
+        loop {_keySlotList::*}:
+            set {_tempItem} to type of {PI::key::black::item}
+            set {_tempName} to name of {PI::key::black::item}
+            replace all "@key@" with "%{PI::keys::display::%loop-value-2%}%&%loop-value-1%" in {_tempName}
+            set {_tempName} to colored {_tempName}
+            set slot {PI::octave::%loop-value-1%::key::%loop-value-2%::slot} of metadata tag "PI::inventory" of {_p} to {_tempItem} with name {_tempName}
+        set {_tempItem} to {PI::soundTypes::item::%{PI::%{_u}%::octave::%loop-value%::soundType}%}
+        set {_tempName} to {PI::octave::%loop-value%::soundType::name}
+        replace all "@instrument@" with "%{PI::soundTypes::display::%{PI::%{_u}%::octave::%loop-value%::soundType}%}%" in {_tempName}
+        set {_tempLore} to {PI::octave::%loop-value%::soundType::lore}
+        replace all "@instrument@" with "%{PI::soundTypes::display::%{PI::%{_u}%::octave::%loop-value%::soundType}%}%" in {_tempLore}
+        set slot {PI::octave::%loop-value%::soundType::slot} of metadata tag "PI::inventory" of {_p} to {_tempItem} named {_tempName} with lore {_tempLore} split at "||"
+        PIupdateInventoryOctaveType({_p})
+    open metadata tag "PI::inventory" of {_p} to {_p}
+
+function PIupdateInventoryVolume(p: player):
+    set {_u} to {_p}'s uuid
+    loop 6 times:
+        set {_tempItem} to {PI::volume::%loop-value%::item}
+        if {PI::%{_u}%::volume} = loop-value:
+            set {_tempItem} to "%type of {PI::volume::%loop-value%::item}% of mending" parsed as item
+        set {_tempName} to name of {PI::volume::%loop-value%::item}
+        replace all "@volume@" with "%{PI::volumes::display::%{PI::%{_u}%::volume}%}%" in {_tempName}
+        set {_tempLore} to PIloreToString(lore of {PI::volume::%loop-value%::item})
+        replace all "@volume@" with "%{PI::volumes::display::%{PI::%{_u}%::volume}%}%" in {_tempLore}
+        set slot {PI::volume::%loop-value%::slot} of metadata tag "PI::inventory" of {_p} to {_tempItem} named {_tempName} with lore {_tempLore} split at "||"
+
+function PIupdateInventoryOctaveType(p: player):
+    set {_u} to {_p}'s uuid
+    loop 3 times:
+        set {_tempItem} to {PI::octaveTypes::item::%{PI::%{_u}%::octave::%loop-value%::octaveType}%}
+        set {_tempName} to {PI::octave::%loop-value%::octaveType::name}
+        replace all "@octave@" with "%{PI::octaveTypes::display::%{PI::%{_u}%::octave::%loop-value%::octaveType}%}%" in {_tempName}
+        set {_tempLore} to {PI::octave::%loop-value%::octaveType::lore}
+        replace all "@octave@" with "%{PI::octaveTypes::display::%{PI::%{_u}%::octave::%loop-value%::octaveType}%}%" in {_tempLore}
+        set slot {PI::octave::%loop-value%::octaveType::slot} of metadata tag "PI::inventory" of {_p} to {_tempItem} named {_tempName} with lore {_tempLore} split at "||"
+
+
+function PIopenInventorySoundType(p: player, o: integer):
+    set metadata tag "PI::soundType::%{_o}%" of {_p} to chest inventory with {PI::soundType::rows} rows named {PI::soundType::name}
+    set slot {PI::soundType::back::slot} of metadata tag "PI::soundType::%{_o}%" of {_p} to {PI::soundType::back::item}
+    PIupdateInventorySoundTypeInstrument({_p}, {_o})
+    loop 54 times:
+        if {PI::soundType::placeHolder::%loop-value - 1%} is set:
+            set slot loop-value - 1 of metadata tag "PI::soundType::%{_o}%" of {_p} to {PI::soundType::placeHolder::%loop-value - 1%}
+    open metadata tag "PI::soundType::%{_o}%" of {_p} to {_p}
+
+function PIupdateInventorySoundTypeInstrument(p: player, o: integer):
+    set {_u} to {_p}'s uuid
+    loop size of {PI::soundTypes::ID::*} times:
+        set {_tempItem} to {PI::soundTypes::item::%loop-value%}
+        if {PI::%{_u}%::octave::%{_o}%::soundType} = loop-value:
+            set {_tempItem} to "%{PI::soundTypes::item::%loop-value%}% of mending" parsed as item
+        set {_tempName} to {PI::soundType::instrument::name}
+        replace all "@instrument@" with "%{PI::soundTypes::display::%loop-value%}%" in {_tempName}
+        set slot loop-value + 8 of metadata tag "PI::soundType::%{_o}%" of {_p} to {_tempItem} named {_tempName}
+
+
+function PIloreToString(l: strings) :: string:
+    set {_return} to {_l::1}
+    loop size of {_l::*} - 1 times:
+        set {_return} to "%{_return}%%{_l::%loop-value + 1%}%"
+    return {_return}

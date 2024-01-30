@@ -1,0 +1,89 @@
+on load:
+    set {inventoryColor1} to "<##55ff00>"
+    set {inventoryColor2} to "&7"
+    set {inventoryColor3} to "<##91ff3d>"
+    set {inventoryPrefix} to "%{inventoryColor1}%&lINVENTORIES &8» "
+
+on tab complete:
+    set {_u} to player's uuid
+    if event-string contains "/loadinventory" or "/removeinventory" or "/inventoryinfo":
+        set tab completions for position 1 to {inventories::%{_u}%::*}
+
+
+command /loadinventory [<string>]:
+    trigger:
+        if player is op:
+            if arg-1 is not set:
+                send formatted "%{inventoryPrefix}%&cUnset argument: /loadinventory <inventory>"
+            else:
+                set {_u} to player's uuid
+                if {inventories::%{_u}%::*} contains arg-1:
+                    loadInventory(player, arg-1)
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}% loaded."
+                    play sound "entity.villager.yes"
+                else:
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}% does not exist."
+        else:
+            send formatted "%{inventoryPrefix}%&cYou must have OP to use this command."
+
+command /saveinventory [<string>]:
+    trigger:
+        if player is op:
+            if arg-1 is not set:
+                send formatted "%{inventoryPrefix}%&cUnset argument: /saveinventory <inventory>"
+            else:
+                set {_u} to player's uuid
+                saveInventory(player, arg-1)
+                if {inventories::%{_u}%::*} contains arg-1:
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory overrided under inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}%."
+                else:
+                    add arg-1 to {inventories::%{_u}%::*}
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory saved under inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}%."
+                play sound "entity.villager.yes"
+        else:
+            send formatted "%{inventoryPrefix}%&cYou must have OP to use this command."
+
+command /removeinventory [<string>]:
+    trigger:
+        if player is op:
+            if arg-1 is not set:
+                send formatted "%{inventoryPrefix}%&cUnset argument: /removeinventory <inventory>"
+            else:
+                set {_u} to player's uuid
+                if {inventories::%{_u}%::*} contains arg-1:
+                    remove arg-1 from {inventories::%{_u}%::*}
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}% removed."
+                    play sound "entity.villager.yes"
+                else:
+                    send formatted "%{inventoryPrefix}%%{inventoryColor2}%Inventory %{inventoryColor3}%%arg-1%%{inventoryColor2}% does not exist."
+        else:
+            send formatted "%{inventoryPrefix}%&cYou must have OP to use this command."
+
+
+function loadInventory(p: player, i: string):
+    set {_u} to {_p}'s uuid
+    loop 36 times:
+        set slot loop-value - 1 of {_p}'s inventory to {inventory::%{_i}%::%{_u}%::%loop-value - 1%}
+    set {_p}'s helmet to {armor::%{_i}%::%{_u}%::1}
+    set {_p}'s chestplate to {armor::%{_i}%::%{_u}%::2}
+    set {_p}'s leggings to {armor::%{_i}%::%{_u}%::3}
+    set {_p}'s boots to {armor::%{_i}%::%{_u}%::4}
+    set {_p}'s offhand tool to {offhand::%{_i}%::%{_u}%}
+
+function saveInventory(p: player, i: string):
+    set {_u} to {_p}'s uuid
+    loop 36 times:
+        set {inventory::%{_i}%::%{_u}%::%loop-value - 1%} to slot loop-value - 1 of {_p}'s inventory
+    set {armor::%{_i}%::%{_u}%::1} to {_p}'s helmet
+    if {armor::%{_i}%::%{_u}%::1} is not set:
+        set {armor::%{_i}%::%{_u}%::1} to air
+    set {armor::%{_i}%::%{_u}%::2} to {_p}'s chestplate
+    if {armor::%{_i}%::%{_u}%::2} is not set:
+        set {armor::%{_i}%::%{_u}%::2} to air
+    set {armor::%{_i}%::%{_u}%::3} to {_p}'s leggings
+    if {armor::%{_i}%::%{_u}%::3} is not set:
+        set {armor::%{_i}%::%{_u}%::3} to air
+    set {armor::%{_i}%::%{_u}%::4} to {_p}'s boots
+    if {armor::%{_i}%::%{_u}%::4} is not set:
+        set {armor::%{_i}%::%{_u}%::4} to air
+    set {offhand::%{_i}%::%{_u}%} to {_p}'s offhand tool
