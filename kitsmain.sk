@@ -1,0 +1,596 @@
+######################################### The World NBT
+#/summon minecraft:armor_stand 2018.50 -60.00 -1047.50 {Brain: {memories: {}}, HurtByTimestamp: 0, Attributes: [{Base: 20.0d, Name: "minecraft:generic.max_health"}, {Base: 0.0d, Name: "minecraft:generic.armor_toughness"}, {Base: 0.699999988079071d, Name: "minecraft:generic.movement_speed"}, {Base: 0.0d, Name: "minecraft:generic.armor"}], Invulnerable: 0b, FallFlying: 0b, ShowArms: 1b, AbsorptionAmount: 0.0f, PortalCooldown: 0, FallDistance: 0.0f, DisabledSlots: 0, DeathTime: 0s, WorldUUIDMost: 8850801706464723391L, Pose: {LeftLeg: [32.0f, 0.0f, 0.0f], RightArm: [314.0f, 24.0f, 0.0f], Head: [14.0f, 0.0f, 0.0f], LeftArm: [25.0f, 37.0f, 340.0f], RightLeg: [0.0f, 30.0f, 15.0f]}, Invisible: 0b, Spigot.ticksLived: 194669, Paper.OriginWorld: [I; 2060737858, 725631423, -2026046211, -1372217524], Motion: [0.0d, -0.0784000015258789d, 0.0d], Small: 0b, Health: 20.0f, Bukkit.updateLevel: 2, Paper.SpawnReason: "DEFAULT", OnGround: 1b, Air: 300s, Rotation: [0.0f, 0.0f], HandItems: [{}, {}], ArmorItems: [{id: "minecraft:golden_boots", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:golden_leggings", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:golden_chestplate", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:player_head", tag: {SkullOwner: {Id: [I; -1160213420, 785139712, -1360731248, 1369221847], Properties: {textures: [{Signature: "hdDXtwmRgxQONGay4OSmDKAPhoOXwLqhqER7IniCx7YrAL9jz0YpDb9HPqH5viDH9NLS/I1GDk5bcO5weO9YLp8n+aIy6bpE9pPKO08IoQQIE2+YUtoceffOU5HDNGagdLz3nbJNNcf59tsfUuJSi2sWkVGcEu2tl2t6jqbjuKuCpCg5OCfmhwpUkooIbAzNsw4xYR/OdNJiC2PJ/QYPd7wNvZTatIlmnhsbuPY5gqplkgij9Ado+ce0SHFnYWeNLC+qMOJgcXLX48IbDv2A76/QkhbpnY/8L+LbZ7ezyYqpf9TVl2SEwmDtIYEGGCmfygaAwFNYfBOVUT7bS6ycFe8cXZj1ipZBRo9aa70ER8x76AZ/+O3kDEfIXMnFqW5uc1F1OdiRaNDiD9R7EgD2ktAmo/hSw9rGoVEWmbSM7MNYmgjLBRLz2bcPK66qWSQGpR6Fh4RuYgSp4AKiTIkAwUcVQ9KF9K4TBKSuOqwPfyBmjtRtUh5KSiSdbcQZkE+YBAu7uSVoLPKLYhfTxKt3Bu3tDxwKF4Z5kjGNLvhsTYhibrGogGs5Ib7NoMuumm2vHd949hwZVXD0Ye5LCch01Zm5kHjBGYctec/J2pTEYld94Lzaa5oddLC97+7NVRNPwAW1arTRuHWubtiSJrVld/StITfGrP7hzR9fNgfID8o=", Value: "ewogICJ0aW1lc3RhbXAiIDogMTY3Njc4NTQzMjc4OSwKICAicHJvZmlsZUlkIiA6ICJiYWQ4OGM1NDJlY2M0ODAwYWVlNGUzOTA1MTljYWFkNyIsCiAgInByb2ZpbGVOYW1lIiA6ICJJdHNBY2V5eXl5XyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kMDExN2Q0MmE4N2IwY2VmYTQ3OGUzMDE4ODhlNzE1NDhhOTk4N2Y5MTEzNDBiNWMyMDAwMjI5ZTczMzQ3ODc5IgogICAgfQogIH0KfQ=="}]}, Name: "ItsAceyyyy_"}}, Count: 1b}], Fire: -1s, NoBasePlate: 1b, HurtTime: 0s, WorldUUIDLeast: -8701802213506965684L, Paper.Origin: [2018.5d, -59.5d, -1047.5d]}
+#
+######################################### CMoon NBT
+#/summon minecraft:armor_stand 2015.50 -60.00 -1030.50 {Brain: {memories: {}}, HurtByTimestamp: 0, Attributes: [{Base: 20.0d, Name: "minecraft:generic.max_health"}, {Base: 0.0d, Name: "minecraft:generic.armor_toughness"}, {Base: 0.699999988079071d, Name: "minecraft:generic.movement_speed"}, {Base: 0.0d, Name: "minecraft:generic.armor"}], Invulnerable: 0b, FallFlying: 0b, ShowArms: 0b, AbsorptionAmount: 0.0f, PortalCooldown: 0, FallDistance: 0.0f, DisabledSlots: 0, DeathTime: 0s, WorldUUIDMost: 8850801706464723391L, Pose: {Head: [4.295213f, 0.12490845f, 0.0f], Body: [0.0f, -4.601703f, 0.0f]}, Invisible: 0b, Spigot.ticksLived: 1623, Paper.OriginWorld: [I; 2060737858, 725631423, -2026046211, -1372217524], Motion: [0.0d, -0.0784000015258789d, 0.0d], Small: 0b, Health: 20.0f, Bukkit.updateLevel: 2, Paper.SpawnReason: "DEFAULT", OnGround: 1b, Air: 300s, Rotation: [-180.0f, 0.0f], HandItems: [{}, {}], ArmorItems: [{id: "minecraft:leather_boots", tag: {display: {color: 3583266}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_leggings", tag: {display: {color: 3583266}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_chestplate", tag: {display: {color: 3583266}, Damage: 0}, Count: 1b}, {id: "minecraft:player_head", tag: {SkullOwner: {Id: [I; -51121490, 198066188, -1153746713, -22086950], Properties: {textures: [{Value: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmRlOTZkMjgzOTA5NDVhZDE1NGFhNTVkZTYwODVmZGVlMWFkYzljMTdkZDMwMjAzMTNmMWIzZjFlMTZjYjY2YyJ9fX0="}]}}}, Count: 1b}], Fire: -1s, NoBasePlate: 0b, HurtTime: 0s, WorldUUIDLeast: -8701802213506965684L, Paper.Origin: [2015.5d, -60.0d, -1030.5d]}
+#
+######################################### Killer Queen NBT
+#/summon minecraft:armor_stand 2017.50 -60.00 -1030.50 {Brain: {memories: {}}, HurtByTimestamp: 0, Attributes: [{Base: 20.0d, Name: "minecraft:generic.max_health"}, {Base: 0.0d, Name: "minecraft:generic.armor_toughness"}, {Base: 0.699999988079071d, Name: "minecraft:generic.movement_speed"}, {Base: 0.0d, Name: "minecraft:generic.armor"}], Invulnerable: 0b, FallFlying: 0b, ShowArms: 0b, AbsorptionAmount: 0.0f, PortalCooldown: 0, FallDistance: 0.0f, DisabledSlots: 0, DeathTime: 0s, WorldUUIDMost: 8850801706464723391L, Pose: {Head: [1.5092587f, 1.3698397f, 0.0f], Body: [0.0f, 0.30388737f, 0.0f]}, Invisible: 0b, Spigot.ticksLived: 3608, Paper.OriginWorld: [I; 2060737858, 725631423, -2026046211, -1372217524], Motion: [0.0d, -0.0784000015258789d, 0.0d], Small: 0b, Health: 20.0f, Bukkit.updateLevel: 2, Paper.SpawnReason: "DEFAULT", OnGround: 1b, Air: 300s, Rotation: [180.0f, 0.0f], HandItems: [{}, {}], ArmorItems: [{id: "minecraft:iron_boots", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:iron_leggings", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:iron_chestplate", tag: {Damage: 0}, Count: 1b}, {id: "minecraft:player_head", tag: {SkullOwner: {Id: [I; -146817991, 737560588, -1190773498, 1938491019], Properties: {textures: [{Value: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0MjVjZDM4ZTBhZDUxMmQ5YTRiNTZiMmE5NmIzMTg1NGY0Y2ZlYjJhYmYxYTYzYzllNjE3NGUwMDY2N2U1YSJ9fX0="}]}}}, Count: 1b}], Fire: -1s, NoBasePlate: 0b, HurtTime: 0s, WorldUUIDLeast: -8701802213506965684L, Paper.Origin: [2017.5d, -60.0d, -1030.5d]}
+#
+######################################### MADE IN HEAVEN NBT
+#/summon minecraft:armor_stand 2018.50 -60.00 -1030.50 {Brain: {memories: {}}, HurtByTimestamp: 0, Attributes: [{Base: 20.0d, Name: "minecraft:generic.max_health"}, {Base: 0.0d, Name: "minecraft:generic.armor_toughness"}, {Base: 0.699999988079071d, Name: "minecraft:generic.movement_speed"}, {Base: 0.0d, Name: "minecraft:generic.armor"}], Invulnerable: 0b, FallFlying: 0b, ShowArms: 0b, AbsorptionAmount: 0.0f, PortalCooldown: 0, FallDistance: 0.0f, DisabledSlots: 0, DeathTime: 0s, WorldUUIDMost: 8850801706464723391L, Pose: {Head: [3.7350118f, 3.3898487f, 0.0f], Body: [0.0f, 0.05710125f, 0.0f]}, Invisible: 0b, Spigot.ticksLived: 4106, Paper.OriginWorld: [I; 2060737858, 725631423, -2026046211, -1372217524], Motion: [0.0d, -0.0784000015258789d, 0.0d], Small: 0b, Health: 20.0f, Bukkit.updateLevel: 2, Paper.SpawnReason: "DEFAULT", OnGround: 1b, Air: 300s, Rotation: [-180.0f, 0.0f], HandItems: [{}, {}], ArmorItems: [{id: "minecraft:leather_boots", tag: {display: {color: 16777215}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_leggings", tag: {display: {color: 16777215}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_chestplate", tag: {display: {color: 16777215}, Damage: 0}, Count: 1b}, {id: "minecraft:player_head", tag: {SkullOwner: {Id: [I; -1697484428, 608126125, -1430740466, 1605515985], Properties: {textures: [{Signature: "ANc7HxYyUvy3JPKqsre2INr2PduCfGNqialJ01i18se6x3wLNf1P6h6qhsMPvuBrjMBF4zt3CvJG+UZMCWrTddMkEtWoUai77okhso4rHC1NvfBe27jpeBtaAfiY0ZIDSR3gWomKyZIh5YNCDJix12wC3MF/SzzyJ9WzqBWcS7heXH0ZD8ezdWm+6i+5M9/a/5QTq1BahU678SgU1H5q3ZW9RUBrbZXq+2Og2JxUBgd0crOutWgECc8AogoVnZIlMJmq17N7lU29xptniI5ovcvpNlh9mvJt3l4bagcZfzzmoZJIYhtu4E3+gmf/70Fd+EQvMeBx7T1D9BROzV1s56exwkeNegpAH4+7B/ik44LE3vnjP/a8InLcF/gbBTZxQoEPO24lsFhq1jPkPBvlogPP5CY/J5j1HS3O1Vv3GTXRu/ni0Pqu//TQ3Ru8wGBhu6QUF33Ed90NywFxCYvxcj6GEfJIlEaSIueFyGv8mYfj4+kAv/05K5DtvVGoRqvydoQB+6cqdMXzRkUbPBW2hLS2vBAIe7sQaVsb/9LK0Vmec3s7sokU07GGi2nE07DrbhP2Lsb3DqHoocdhtvr+XTQqWqh3xuvWBGP3BulwWJztrGckIlCCMmU8fb1NyTbphL4dlV35/mz8MzCmtHsd0dBS5Sm0q5YTdnNrbAub1PI=", Value: "ewogICJ0aW1lc3RhbXAiIDogMTY3Njc4NTg1NDU4OCwKICAicHJvZmlsZUlkIiA6ICI5YWQyNzE3NDI0M2Y0NGFkYWFiOGEyMGU1ZmIyM2FkMSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYWRlX19Jbl9fSGVhdmVuIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzY2MjJmZjlkZDgxZDFjNGE1M2VhZTI3OTU0MzAwMTZhOWRiMGYzNjAzYThiYjFhMzMwNzk0ODQ3ODI0NTc4ZjgiCiAgICB9CiAgfQp9"}]}, Name: "Made__In__Heaven"}}, Count: 1b}], Fire: -1s, NoBasePlate: 0b, HurtTime: 0s, WorldUUIDLeast: -8701802213506965684L, Paper.Origin: [2018.5d, -60.0d, -1030.5d]}
+#
+######################################### d4c
+#/summon minecraft:armor_stand 2016.50 -60.00 -1030.50 {Brain: {memories: {}}, HurtByTimestamp: 0, Attributes: [{Base: 20.0d, Name: "minecraft:generic.max_health"}, {Base: 0.0d, Name: "minecraft:generic.armor_toughness"}, {Base: 0.699999988079071d, Name: "minecraft:generic.movement_speed"}, {Base: 0.0d, Name: "minecraft:generic.armor"}], Invulnerable: 0b, FallFlying: 0b, ShowArms: 0b, AbsorptionAmount: 0.0f, PortalCooldown: 0, FallDistance: 0.0f, DisabledSlots: 0, DeathTime: 0s, WorldUUIDMost: 8850801706464723391L, Pose: {Head: [3.2511153f, 5.5076647f, 0.0f], Body: [0.0f, -4.9727545f, 0.0f]}, Invisible: 0b, Spigot.ticksLived: 35448, Paper.OriginWorld: [I; 2060737858, 725631423, -2026046211, -1372217524], Motion: [0.0d, -0.0784000015258789d, 0.0d], Small: 0b, Health: 20.0f, Bukkit.updateLevel: 2, Paper.SpawnReason: "DEFAULT", OnGround: 1b, Air: 300s, Rotation: [-180.0f, 0.0f], HandItems: [{}, {}], ArmorItems: [{id: "minecraft:leather_boots", tag: {display: {color: 9031664}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_leggings", tag: {display: {color: 9031664}, Damage: 0}, Count: 1b}, {id: "minecraft:leather_chestplate", tag: {display: {color: 9031664}, Damage: 0}, Count: 1b}, {id: "minecraft:player_head", tag: {SkullOwner: {Id: [I; 551180829, -235846778, -1621975685, -507780208], Properties: {textures: [{Value: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ1NmZhZGMzNmY2MmYzMzkxMWQzMDE2OTk5ZDlkNmMyZTMxMzZjNmRiOWZiODljNWM4YTZmMDZlYTQ2YjQzNSJ9fX0="}]}}}, Count: 1b}], Fire: -1s, NoBasePlate: 0b, HurtTime: 0s, WorldUUIDLeast: -8701802213506965684L, Paper.Origin: [2016.5d, -60.0d, -1030.5d]}
+#
+#
+#
+######################################### Click stand attack animation
+#/summon armor_stand ~ ~ ~ {Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,Pose:{LeftLeg:[10f,0f,0f],RightLeg:[348f,0f,0f],RightArm:[264f,0f,93f]}}
+#
+#/summon minecraft:zombie ~ ~ ~ {CustomName:"\"Commissar\"",Health:20,Invulnerable:1,HandItems:[{id:stick,tag:{display:{Name:'[{"text":"Slave ","italic":false,"color":"red"},{"text":"Beater","color":"white"}]'},Enchantments:[{id:sharpness,lvl:666}],Unbreakable:1,Damage:1000000},Count:1}],HandDropChances:[0.00F],ArmorItems:[{id:leather_boots,tag:{display:{Name:'[{"text":"Stalin ","italic":false},{"text":"Armor","color":"white"}]'},Unbreakable:1},Count:1},{id:leather_leggings,tag:{display:{Name:'[{"text":"Stalin ","italic":false},{"text":"Armor","color":"white"}]'},Unbreakable:1},Count:1},{id:leather_chestplate,tag:{display:{Name:'[{"text":"Stalin ","italic":false},{"text":"Armor","color":"white"}]'},Unbreakable:1},Count:1},{id:player_head,tag:{SkullOwner:_Joseph_Stalin},Count:1}],ArmorDropChances:[0.00F,0.00F,0.00F,0.00F],Attributes:[{Name:"generic.movement_speed",Base:0.4F},{Name:"generic.max_health",Base:20F}]}
+
+options:
+    C1: <##ffee00>
+    C2: <##f8ff2e>
+    C3: &7
+    C4: &c
+
+on load:
+    set {KIg::prefix} to "{@C1}&lKITS &8» "
+    set {KIg::sound::good} to "entity.villager.yes"
+    set {KIg::scoreboard::cooldown::name} to "   &f&l↓ {@C1}&lKIT COOLDOWNS&f&l ↓   "
+
+    set {KIg::stand::summon::item} to gray dye named "&bSummon Stand"
+    set {KIg::stand::unsummon::item} to lime dye named "&b戻る Stand"
+
+    set {KIg::classes::name::*} to "TheWorld", "CMoon", "MIH", "Vampire", "D4C" and "KillerQueen"
+
+    #use @pitch@ to denote pitch
+    set {KIg::class::TheWorld::stand::nbt} to "{Pose:{Head:[@pitch@f,0.0f,0.0f]},DisabledSlots:4144959,Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,CustomName:'{""text"":""The World"",""color"":""yellow""}',CustomNameVisible:1b,ArmorItems:[{id:""minecraft:golden_boots"",tag:{Damage:0},Count:1b},{id:""minecraft:golden_leggings"",tag:{Damage:0},Count:1b},{id:""minecraft:golden_chestplate"",tag:{Damage:0},Count:1b},{id:""minecraft:player_head"",tag:{SkullOwner:{Id:[I;-1160213420,785139712,-1360731248,1369221847],Properties:{textures:[{Signature:""hdDXtwmRgxQONGay4OSmDKAPhoOXwLqhqER7IniCx7YrAL9jz0YpDb9HPqH5viDH9NLS/I1GDk5bcO5weO9YLp8n+aIy6bpE9pPKO08IoQQIE2+YUtoceffOU5HDNGagdLz3nbJNNcf59tsfUuJSi2sWkVGcEu2tl2t6jqbjuKuCpCg5OCfmhwpUkooIbAzNsw4xYR/OdNJiC2PJ/QYPd7wNvZTatIlmnhsbuPY5gqplkgij9Ado+ce0SHFnYWeNLC+qMOJgcXLX48IbDv2A76/QkhbpnY/8L+LbZ7ezyYqpf9TVl2SEwmDtIYEGGCmfygaAwFNYfBOVUT7bS6ycFe8cXZj1ipZBRo9aa70ER8x76AZ/+O3kDEfIXMnFqW5uc1F1OdiRaNDiD9R7EgD2ktAmo/hSw9rGoVEWmbSM7MNYmgjLBRLz2bcPK66qWSQGpR6Fh4RuYgSp4AKiTIkAwUcVQ9KF9K4TBKSuOqwPfyBmjtRtUh5KSiSdbcQZkE+YBAu7uSVoLPKLYhfTxKt3Bu3tDxwKF4Z5kjGNLvhsTYhibrGogGs5Ib7NoMuumm2vHd949hwZVXD0Ye5LCch01Zm5kHjBGYctec/J2pTEYld94Lzaa5oddLC97+7NVRNPwAW1arTRuHWubtiSJrVld/StITfGrP7hzR9fNgfID8o="",Value:""ewogICJ0aW1lc3RhbXAiIDogMTY3Njc4NTQzMjc4OSwKICAicHJvZmlsZUlkIiA6ICJiYWQ4OGM1NDJlY2M0ODAwYWVlNGUzOTA1MTljYWFkNyIsCiAgInByb2ZpbGVOYW1lIiA6ICJJdHNBY2V5eXl5XyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kMDExN2Q0MmE4N2IwY2VmYTQ3OGUzMDE4ODhlNzE1NDhhOTk4N2Y5MTEzNDBiNWMyMDAwMjI5ZTczMzQ3ODc5IgogICAgfQogIH0KfQ==""}]},Name:""ItsAceyyyy_""}},Count:1b}]}"
+    set {KIg::class::CMoon::stand::nbt} to "{Pose:{Head:[@pitch@f,0.0f,0.0f]},DisabledSlots:4144959,Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,CustomName:'{""text"":""C-Moon"",""color"":""yellow""}',CustomNameVisible:1b,ArmorItems:[{id:""minecraft:leather_boots"",tag:{display:{color:3583266},Damage:0},Count:1b},{id:""minecraft:leather_leggings"",tag:{display:{color:3583266},Damage:0},Count:1b},{id:""minecraft:leather_chestplate"",tag:{display:{color:3583266},Damage:0},Count:1b},{id:""minecraft:player_head"",tag:{SkullOwner:{Id:[I;-51121490,198066188,-1153746713,-22086950],Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmRlOTZkMjgzOTA5NDVhZDE1NGFhNTVkZTYwODVmZGVlMWFkYzljMTdkZDMwMjAzMTNmMWIzZjFlMTZjYjY2YyJ9fX0=""}]}}},Count:1b}]}"
+    set {KIg::class::MIH::stand::nbt} to "{Pose:{Head:[@pitch@f,0.0f,0.0f]},DisabledSlots:4144959,Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,CustomName:'{""text"":""Made In Heaven"",""color"":""yellow""}',CustomNameVisible:1b,ArmorItems:[{id:""minecraft:leather_boots"",tag:{display:{color:16777215},Damage:0},Count:1b},{id:""minecraft:leather_leggings"",tag:{display:{color:16777215},Damage:0},Count:1b},{id:""minecraft:leather_chestplate"",tag:{display:{color:16777215},Damage:0},Count:1b},{id:""minecraft:player_head"",tag:{SkullOwner:{Id:[I;-1697484428,608126125,-1430740466,1605515985],Properties:{textures:[{Signature:""ANc7HxYyUvy3JPKqsre2INr2PduCfGNqialJ01i18se6x3wLNf1P6h6qhsMPvuBrjMBF4zt3CvJG+UZMCWrTddMkEtWoUai77okhso4rHC1NvfBe27jpeBtaAfiY0ZIDSR3gWomKyZIh5YNCDJix12wC3MF/SzzyJ9WzqBWcS7heXH0ZD8ezdWm+6i+5M9/a/5QTq1BahU678SgU1H5q3ZW9RUBrbZXq+2Og2JxUBgd0crOutWgECc8AogoVnZIlMJmq17N7lU29xptniI5ovcvpNlh9mvJt3l4bagcZfzzmoZJIYhtu4E3+gmf/70Fd+EQvMeBx7T1D9BROzV1s56exwkeNegpAH4+7B/ik44LE3vnjP/a8InLcF/gbBTZxQoEPO24lsFhq1jPkPBvlogPP5CY/J5j1HS3O1Vv3GTXRu/ni0Pqu//TQ3Ru8wGBhu6QUF33Ed90NywFxCYvxcj6GEfJIlEaSIueFyGv8mYfj4+kAv/05K5DtvVGoRqvydoQB+6cqdMXzRkUbPBW2hLS2vBAIe7sQaVsb/9LK0Vmec3s7sokU07GGi2nE07DrbhP2Lsb3DqHoocdhtvr+XTQqWqh3xuvWBGP3BulwWJztrGckIlCCMmU8fb1NyTbphL4dlV35/mz8MzCmtHsd0dBS5Sm0q5YTdnNrbAub1PI="",Value:""ewogICJ0aW1lc3RhbXAiIDogMTY3Njc4NTg1NDU4OCwKICAicHJvZmlsZUlkIiA6ICI5YWQyNzE3NDI0M2Y0NGFkYWFiOGEyMGU1ZmIyM2FkMSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNYWRlX19Jbl9fSGVhdmVuIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzY2MjJmZjlkZDgxZDFjNGE1M2VhZTI3OTU0MzAwMTZhOWRiMGYzNjAzYThiYjFhMzMwNzk0ODQ3ODI0NTc4ZjgiCiAgICB9CiAgfQp9""}]},Name:""Made__In__Heaven""}},Count:1b}]}"
+    set {KIg::class::D4C::stand::nbt} to "{Pose:{Head:[@pitch@f,0.0f,0.0f]},DisabledSlots:4144959,Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,CustomName:'{""text"":""D4C"",""color"":""yellow""}',CustomNameVisible:1b,ArmorItems:[{id:""minecraft:leather_boots"",tag:{display:{color:9031664},Damage:0},Count:1b},{id:""minecraft:leather_leggings"",tag:{display:{color:9031664},Damage:0},Count:1b},{id:""minecraft:leather_chestplate"",tag:{display:{color:9031664},Damage:0},Count:1b},{id:""minecraft:player_head"",tag:{SkullOwner:{Id:[I;551180829,-235846778,-1621975685,-507780208],Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ1NmZhZGMzNmY2MmYzMzkxMWQzMDE2OTk5ZDlkNmMyZTMxMzZjNmRiOWZiODljNWM4YTZmMDZlYTQ2YjQzNSJ9fX0=""}]}}},Count:1b}]}"
+    set {KIg::class::KillerQueen::stand::nbt} to "{Pose:{Head:[@pitch@f,0.0f,0.0f]},DisabledSlots:4144959,Invulnerable:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,CustomName:'{""text"":""Killer Queen"",""color"":""yellow""}',CustomNameVisible:1b,ArmorItems:[{id:""minecraft:iron_boots"",tag:{Damage:0},Count:1b},{id:""minecraft:iron_leggings"",tag:{Damage:0},Count:1b},{id:""minecraft:iron_chestplate"",tag:{Damage:0},Count:1b},{id:""minecraft:player_head"",tag:{SkullOwner:{Id:[I;-146817991,737560588,-1190773498,1938491019],Properties:{textures:[{Value:""eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0MjVjZDM4ZTBhZDUxMmQ5YTRiNTZiMmE5NmIzMTg1NGY0Y2ZlYjJhYmYxYTYzYzllNjE3NGUwMDY2N2U1YSJ9fX0=""}]}}},Count:1b}]}"
+
+on tab complete:
+    if event-string contains "/kit" or "/k":
+        if player is op:
+            set tab completions for position 1 to "load", "l", "give", "g", "save", "s", "remove", "r", "token", "t", "toggleabilities", "ta", "class" and "cl"
+            if {KIg::kit::names::*} is set:
+                if tab arg-1 = "load" or "l" or "give" or "g" or "remove" or "r" or "delete" or "d" or "token" or "t":
+                    set tab completions for position 2 to {KIg::kit::names::*}
+                    if {KIg::kit::names::*} contains tab arg-2:
+                        loop all players:
+                            add loop-player to {_playerList::*}
+                        set tab completions for position 3 to {_playerList::*}
+                else if tab arg-1 = "class" or "cl":
+                    set tab completions for position 2 to "clear" and "c"
+                    if tab arg-2 = "clear" or "c":
+                        loop all players:
+                            add loop-player to {_playerList::*}
+                        set tab completions for position 3 to {_playerList::*}
+
+
+
+#Kit Functionality
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Kit Command
+command /kit [<string>] [<string>] [<string>]:
+    aliases: /k
+    trigger:
+        if player is op:
+            set {_u} to player's uuid
+            if arg-1 is set:
+                if arg-1 = "load" or "l":
+                    if arg-2 is set:
+                        set {_kit} to arg-2
+                        if KIgetValidKit({_kit}) = true:
+                            if arg-3 is set:
+                                if arg-3 parsed as player is set:
+                                    set {_p2} to arg-3 parsed as player
+                                    KIloadInventory({_p2}, {_kit})
+                                    send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} loaded for {@C2}%{_p2}%{@C3}."
+                                    send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} loaded."
+                                    play sound {KIg::sound::good}
+                                    play sound {KIg::sound::good} to {_p2}
+                                else:
+                                    send "%{KIg::prefix}%{@C4}Invalid player. /kit load %{_kit}% <(player)>"
+                            else:
+                                KIloadInventory(player, {_kit})
+                                send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} loaded."
+                                play sound {KIg::sound::good}
+                        else:
+                            send "%{KIg::prefix}%{@C4}Invalid kit. /kit load <(kit)>"
+                    else:
+                        send "%{KIg::prefix}%{@C4}Unset argument. /kit load <(kit)>"
+                else if arg-1 = "give" or "g":
+                    if arg-2 is set:
+                        set {_kit} to arg-2
+                        if KIgetValidKit({_kit}) = true:
+                            if arg-3 is set:
+                                if arg-3 parsed as player is set:
+                                    set {_p2} to arg-3 parsed as player
+                                    KIgiveInventory({_p2}, {_kit})
+                                    send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} given to {@C2}%{_p2}%{@C3}."
+                                    send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} given." to {_p2}
+                                    play sound {KIg::sound::good}
+                                    play sound {KIg::sound::good} to {_p2}
+                                else:
+                                    send "%{KIg::prefix}%{@C4}Invalid player. /kit load %{_kit}%{@C4} <(player)>"
+                            else:
+                                KIgiveInventory(player, {_kit})
+                                send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} given."
+                                play sound {KIg::sound::good}
+                        else:
+                            send "%{KIg::prefix}%{@C4}Invalid kit. /kit give <(kit)>"
+                    else:
+                        send "%{KIg::prefix}%{@C4}Unset argument. /kit give <(kit)>"
+                else if arg-1 = "save" or "s" or "create" or "cr":
+                    if arg-2 is set:
+                        set {_kit} to arg-2
+                        if KIgetValidKit({_kit}) = true:
+                            if ORadminPermission({_u}) = true:
+                                send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} overridden."
+                            else:
+                                send "%{KIg::prefix}%{@C4}You are not permitted to override already created kits."
+                        else:
+                            add {_kit} to {KIg::kit::names::*}
+                            send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} saved."
+                        set {KIg::kit::items::%{_kit}%::*} to KIgetInventory(player)
+                        play sound {KIg::sound::good}
+                    else:
+                        send "%{KIg::prefix}%{@C4}Unset argument. /kit save <(kit)>"
+                else if arg-1 = "remove" or "r" or "delete" or "d":
+                    if ORadminPermission({_u}) = true:
+                        if arg-2 is set:
+                            set {_kit} to arg-2
+                            if KIgetValidKit({_kit}) = true:
+                                delete {KIg::kit::items::%{_kit}%::*}
+                                remove {_kit} from {KIg::kit::names::*}
+                                send "%{KIg::prefix}%{@C3}Kit {@C2}%{_kit}%{@C3} removed."
+                                play sound {KIg::sound::good}
+                            else:
+                                send "%{KIg::prefix}%{@C4}Invalid kit. /kit remove <(kit)>"
+                        else:
+                            send "%{KIg::prefix}%{@C4}Unset argument. /kit remove <(kit)>"
+                    else:
+                        send "%{KIg::prefix}%{@C4}You are not permitted to remove kits."
+                else if arg-1 = "token" or "t":
+                    if arg-2 is set:
+                        set {_kit} to arg-2
+                        if KIgetValidKit({_kit}) = true:
+                            set {_item} to paper named "{@C1}&lKIT TOKEN &8- &r%{_kit}%" with lore " &8• &7Right-click to activate"
+                            if arg-3 is set:
+                                if arg-3 parsed as player is set:
+                                    set {_p2} to arg-3 parsed as player
+                                    give {_p2} {_item}
+                                    send "%{KIg::prefix}%{@C3}Kit token from kit {@C2}%{_kit}%{@C3} given to {@C2}%{_p2}%{@C3}."
+                                    send "%{KIg::prefix}%{@C3}Kit token from kit {@C2}%{_kit}%{@C3} received." to {_p2}
+                                    play sound {KIg::sound::good}
+                                    play sound {KIg::sound::good} to {_p2}
+                                else:
+                                    send "%{KIg::prefix}%{@C4}Invalid player. /kit load %{_kit}%{@C4} <(player)>"
+                            else:
+                                give player {_item}
+                                send "%{KIg::prefix}%{@C3}Kit token from kit {@C2}%{_kit}%{@C3} received."
+                                play sound {KIg::sound::good}
+                        else:
+                            send "%{KIg::prefix}%{@C4}Invalid kit. /kit token <(kit)>"
+                    else:
+                        send "%{KIg::prefix}%{@C4}Unset argument. /kit token <(kit)>"
+                else if arg-1 = "toggleabilities" or "ta":
+                    if ORadminPermission({_u}) = true:
+                        if {KIg::abilities} = false:
+                            set {KIg::abilities} to true
+                            send "%{KIg::prefix}%{@C3}Kit abilities {@C2}activated{@C3}."
+                        else:
+                            set {KIg::abilities} to false
+                            send "%{KIg::prefix}%{@C3}Kit abilities {@C2}deactivated{@C3}."
+                        play sound {KIg::sound::good}
+                    else:
+                        send "%{KIg::prefix}%{@C4}You are not permitted to toggle kit abilities."
+                else if arg-1 = "class" or "cl":
+                    if arg-2 is set:
+                        if arg-2 = "clear" or "c":
+                            if arg-3 is set:
+                                set {_p2} to arg-3 parsed as player
+                                if {_p2} is set:
+                                    set {_u2} to uuid of {_p2}
+                                    if {KI::%{_u2}%::class} is set:
+                                        send "%{KIg::prefix}%{@C3}The class {@C2}%{KI::%{_u2}%::class}%{@C3} has been cleared from {@C2}%{_p2}%{@C3}."
+                                        send "%{KIg::prefix}%{@C3}The class {@C2}%{KI::%{_u2}%::class}%{@C3} has been cleared from you." to {_p2}
+                                        KIremoveClass({_p2})
+                                        play sound {KIg::sound::good}
+                                        play sound {KIg::sound::good} to {_p2}
+                                    else:
+                                        send "%{KIg::prefix}%{@C2}%{_p2}%{@C3} does not have a class."
+                                else:
+                                    send "%{KIg::prefix}%{@C4}Invalid player. /kit class clear <(player)>"
+                            else:
+                                if {KI::%{_u}%::class} is set:
+                                    send "%{KIg::prefix}%{@C3}The class {@C2}%{KI::%{_u}%::class}%{@C3} has been cleared from you."
+                                    KIremoveClass(player)
+                                    play sound {KIg::sound::good}
+                                else:
+                                    send "%{KIg::prefix}%{@C3}You do not have a class."
+                        else:
+                            send "%{KIg::prefix}%{@C4}Incorrect argument. /kit class <clear>"
+                    else:
+                        send "%{KIg::prefix}%{@C4}Unset argument. /kit class <clear>"
+                else:
+                    send "%{KIg::prefix}%{@C4}Incorrect argument. /kit <load/give/save/remove/token/toggleabilities/class>"
+            else:
+                send "%{KIg::prefix}%{@C4}Unset argument. /kit <load/give/save/remove/token/toggleabilities/class>"
+        else:
+            send "%{KIg::prefix}%{@C4}You must have OP to use this command."
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Kit Selection
+#receive kit with kit token
+on right click:
+    set {_u} to uuid of player
+    if type of tool = paper:
+        set {_name} to uncolored name of event-item
+        if first 9 characters of {_name} = "KIT TOKEN":
+            set player's held item to air
+            set {_nameSplit::*} to {_name} split at " "
+            set {_kit} to {_nameSplit::4}
+            if {KIg::kit::items::%{_kit}%::*} is set:
+                #set max health
+                loop size of {KIg::classes::name::*} times:
+                    if {_kit} = {KIg::classes::name::%loop-value%}:
+                        set {_specialKit} to true
+                        set {KI::%{_u}%::class} to {_kit}
+                        set {KI::%{_u}%::class::previous::gamemode} to gamemode of player
+                        set {KI::%{_u}%::class::previous::items::*} to KIgetInventory(player)
+                        execute console command "/attribute %player% generic.max_health base set %{KIg::class::%{KIg::classes::name::%loop-value%}%::health}%"
+                        exit loop
+                if {_specialKit} is not set:
+                    execute console command "/attribute %player% generic.max_health base set 20"
+                
+                clear player's inventory
+                execute console command "/effect clear %player%"
+                set player's health to 1000
+                apply saturation 255 to player for 3 seconds
+                set gamemode of player to survival
+                play sound "block.note_block.bell" with pitch 2
+                wait 1 second
+                KIloadInventory(player, {_kit})
+                play sound "entity.player.attack.sweep" with pitch 0.6
+
+on death:
+    set {_u} to uuid of victim
+    if {KI::%{_u}%::class} is set:
+        KIunsummonStand(victim)
+        KIdeleteCooldowns(victim)
+        KIloadInventory(victim, {KI::%{_u}%::class})
+
+#trigger
+on join:
+    set {_u} to uuid of player
+    if {KI::%{_u}%::class} is set:
+        KIremoveClass(player)
+
+#remove class
+function KIremoveClass(p: player):
+    set {_u} to uuid of {_p}
+    set gamemode of {_p} to {KI::%{_u}%::class::previous::gamemode}
+    clear {_p}'s inventory
+    loop 36 times:
+        set slot loop-value - 1 of {_p}'s inventory to {KI::%{_u}%::class::previous::items::%loop-value%}
+    set {_p}'s helmet to {KI::%{_u}%::class::previous::items::37}
+    set {_p}'s chestplate to {KI::%{_u}%::class::previous::items::38}
+    set {_p}'s leggings to {KI::%{_u}%::class::previous::items::39}
+    set {_p}'s boots to {KI::%{_u}%::class::previous::items::40}
+    set {_p}'s offhand tool to {KI::%{_u}%::class::previous::items::41}
+    execute console command "/attribute %{_p}% generic.max_health base set 20"
+    KIunsummonStand({_p})
+    delete {KI::%{_u}%::class}
+    delete {KI::%{_u}%::class::previous::*}
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Kit Functions
+function KIloadInventory(p: player, kit: string):
+    loop 36 times:
+        set slot loop-value - 1 of {_p}'s inventory to {KIg::kit::items::%{_kit}%::%loop-value%}
+    set {_p}'s helmet to {KIg::kit::items::%{_kit}%::37}
+    set {_p}'s chestplate to {KIg::kit::items::%{_kit}%::38}
+    set {_p}'s leggings to {KIg::kit::items::%{_kit}%::39}
+    set {_p}'s boots to {KIg::kit::items::%{_kit}%::40}
+    set {_p}'s offhand tool to {KIg::kit::items::%{_kit}%::41}
+    
+function KIgiveInventory(p: player, kit: string):
+    loop 41 times:
+        loop 36 times:
+            if slot loop-value-2 - 1 of {_p}'s inventory = air:
+                set {_inventoryRoom} to true
+                exit loop
+        if {_inventoryRoom} = true:
+            give {KIg::kit::items::%{_kit}%::%loop-value%} to {_p}
+            delete {_inventoryRoom}
+        else:
+            drop {KIg::kit::items::%{_kit}%::%loop-value%} at {_p}'s location without velocity
+
+function KIgetInventory(p: player) :: items:
+    loop 36 times:
+        set {_r::%loop-value%} to slot loop-value - 1 of {_p}'s inventory
+    set {_r::37} to {_p}'s helmet
+    set {_r::38} to {_p}'s chestplate
+    set {_r::39} to {_p}'s leggings
+    set {_r::40} to {_p}'s boots
+    loop 5 times:
+        if {_r::%loop-value + 36%} is not set:
+            set {_r::%loop-value + 36%} to air
+    set {_r::41} to {_p}'s offhand tool
+    return {_r::*}
+
+function KIgetValidKit(kit: string) :: boolean:
+    if {KIg::kit::items::%{_kit}%::*} is set:
+        return true
+    return false
+
+
+
+every second:
+    loop all players:
+        if gamemode of loop-player != survival:
+            KIdeleteCooldowns(loop-player)
+            clear loop-player's scoreboard
+        else:
+            set {_u} to loop-player's uuid
+            if {KI::%{_u}%::cooldown::list::*} is set:
+                clear loop-player's scoreboard
+                set title of loop-player's scoreboard to {KIg::scoreboard::cooldown::name}
+                loop size of {KI::%{_u}%::cooldown::list::*} times:
+                    set {_cooldownSplit::*} to {KI::%{_u}%::cooldown::list::%loop-value-2%} split at "@split@"
+                    set {_name} to {_cooldownSplit::1}
+                    set {_time} to {_cooldownSplit::2} parsed as integer
+                    set {_displayIndex} to size of {KI::%{_u}%::cooldown::list::*} - loop-value-2 + 1
+                    subtract 1 from {_time}
+                    set line {_displayIndex} of loop-player's scoreboard to " {@C2}%loop-value-2%. &f%{_name}%{@C2}: &7%{_time}%s"
+                    if {_time} <= 0:
+                        add "%loop-value-2%" parsed as integer to {_finishedCooldowns::*}
+                    else:
+                        set {KI::%{_u}%::cooldown::list::%loop-value-2%} to "%{_name}%@split@%{_time}%"
+                loop size of {_finishedCooldowns::*} times:
+                    set {_cooldownIndex} to {_finishedCooldowns::%loop-value-2%}
+                    KIgiveCooldownItem(loop-player, {KI::%{_u}%::cooldown::list::%{_cooldownIndex}%})
+                    delete {KI::%{_u}%::cooldown::list::%{_cooldownIndex}%}
+                if {KI::%{_u}%::cooldown::list::*} is set:
+                    set {KI::%{_u}%::cooldown::list::*} to sorted {KI::%{_u}%::cooldown::list::*}
+                else:
+                    clear loop-player's scoreboard
+
+on join:
+    set {_u} to player's uuid
+    KIdeleteCooldowns(player)
+    delete {KI::%{_u}%::cooldown::nameIndexList::*}
+    delete {KI::%{_u}%::cooldown::itemIndexList::*}
+
+function KIcreateCooldown(p: player, name: string, time: integer, item: item):
+    set {_u} to {_p}'s uuid
+    if gamemode of {_p} = survival:
+        add "%{_name}%@split@%{_time}%" to {KI::%{_u}%::cooldown::list::*}
+        set {KI::%{_u}%::cooldown::list::*} to sorted {KI::%{_u}%::cooldown::list::*}
+        if {KI::%{_u}%::cooldown::nameIndexList::*} does not contain {_name}:
+            set {_itemIndex} to size of {KI::%{_u}%::cooldown::nameIndexList::*} + 1
+            set {KI::%{_u}%::cooldown::nameIndexList::%{_itemIndex}%} to {_name}
+            set {KI::%{_u}%::cooldown::itemIndexList::%{_itemIndex}%} to {_item}
+
+function KIdeleteCooldowns(p: player):
+    set {_u} to {_p}'s uuid
+    delete {KI::%{_u}%::cooldown::list::*}
+
+function KIgiveCooldownItem(p: player, cooldown: string):
+    set {_u} to {_p}'s uuid
+    set {_cooldownSplit::*} to {_cooldown} split at "@split@"
+    set {_name} to {_cooldownSplit::1}
+    loop size of {KI::%{_u}%::cooldown::nameIndexList::*} times:
+        if {KI::%{_u}%::cooldown::nameIndexList::%loop-value%} = {_name}:
+            set {_item} to {KI::%{_u}%::cooldown::itemIndexList::%loop-value%}
+    give {_p} {_item}
+    play sound "block.note_block.bell" with pitch 2 to {_p}
+
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Stand
+#stand toggle
+on right click:
+    if {KIg::abilities} = true:
+        set {_u} to player's uuid
+        if {KI::%{_u}%::class} is set:
+            if {KI::%{_u}%::stand::summon::wait} is not set:
+                if player's held item = {KIg::stand::summon::item}:
+                    if {KI::%{_u}%::stand::show} is not set:
+                        set {_summonChange} to true
+                        KIsummonStand(player)
+                        set player's held item to {KIg::stand::unsummon::item}
+                        play sound "entity.warden.dig" with pitch 2 to all players in radius 10 of player
+                else if player's held item = {KIg::stand::unsummon::item}:
+                    set {_summonChange} to true
+                    KIunsummonStand(player)
+                    set player's held item to {KIg::stand::summon::item}
+                    play sound "entity.warden.sonic_boom" with pitch 2 to all players in radius 10 of player
+                if {_summonChange} = true:
+                    set {KI::%{_u}%::stand::summon::wait} to true
+                    wait 3 seconds
+                    delete {KI::%{_u}%::stand::summon::wait}
+
+on join:
+    set {_u} to player's uuid
+    delete {KI::%{_u}%::stand::summon::wait}
+
+function KIsummonStand(p: player):
+    set {_u} to uuid of {_p}
+    set {_class} to {KI::%{_u}%::class}
+    set {KI::%{_u}%::stand::nbt} to {KIg::class::%{_class}%::stand::nbt}
+    set {KI::%{_u}%::stand::show} to true
+
+function KIunsummonStand(p: player):
+    set {_u} to uuid of {_p}
+    delete {KI::%{_u}%::stand::nbt}
+    delete {KI::%{_u}%::stand::show}
+
+#trigger
+every tick:
+    loop all players:
+        set {_u} to uuid of loop-player
+        if {KI::%{_u}%::stand::show} = true:
+            KIshowStand(loop-player)
+
+#show stand
+function KIshowStand(p: player):
+    set {_u} to {_p}'s uuid
+    #1 block to the right
+    set {_location} to location of {_p}
+    set {_x} to x-coordinate of {_location}
+    set {_y} to y-coordinate of {_location}
+    set {_z} to z-coordinate of {_location}
+    set {_world} to world of {_location}
+    set {_yaw} to yaw of {_p}
+    set {_pitch} to pitch of {_p}
+    set {_location} to location({_x}, {_y}, {_z}, {_world}, {_yaw}, {_pitch})
+    set {_location} to location 1 to the right of {_location}
+    #1 block behind
+    set {_x} to x-coordinate of {_location}
+    set {_y} to y-coordinate of {_location}
+    set {_z} to z-coordinate of {_location}
+    set {_location} to location({_x}, {_y}, {_z}, {_world}, {_yaw}, {_pitch})
+    set {_location} to location 1 behind {_location}
+    #sets stand's facing
+    set {_x} to x-coordinate of {_location}
+    set {_y} to y-coordinate of {_location}
+    set {_z} to z-coordinate of {_location}
+    set {_location} to location({_x}, {_y}, {_z}, {_world}, {_yaw}, {_pitch})
+    #changes stand nbt
+    set {_nbt} to {KI::%{_u}%::stand::nbt}
+    replace all "@pitch@" with "%{_pitch}%" in {_nbt}
+    spawn armor stand at {_location} with nbt from {_nbt}
+    set {_stand} to last spawned entity
+    wait 1 tick
+    kill {_stand}
+    
+
+
+#Functions
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Schematics
+#!KIsaveSchematic("roadroller", location(-7100.5,-59.5,-366.5,"world"), location(-7094.5,-57.5,-363.5,"world"))
+function KIsaveSchematic(name: string, pos1: location, pos2: location):
+    set {_x1} to x-coordinate of {_pos1}
+    set {_y1} to y-coordinate of {_pos1}
+    set {_z1} to z-coordinate of {_pos1}
+    set {_x2} to x-coordinate of {_pos2}
+    set {_y2} to y-coordinate of {_pos2}
+    set {_z2} to z-coordinate of {_pos2}
+    set {_world} to world of {_pos1}
+    set {_xDistance} to {_x2} - {_x1} + 1
+    set {_yDistance} to {_y2} - {_y1} + 1
+    set {_zDistance} to {_z2} - {_z1} + 1
+    loop {_xDistance} times:
+        loop {_yDistance} times:
+            loop {_zDistance} times:
+                set {_x3} to {_x1} + loop-value-1 - 1
+                set {_y3} to {_y1} + loop-value-2 - 1
+                set {_z3} to {_z1} + loop-value-3 - 1
+                set {KIg::schematic::%{_name}%::blocks::%loop-value-1%::%loop-value-2%::%loop-value-3%} to type of block at location {_x3}, {_y3}, {_z3} in {_world}
+    set {KIg::schematic::%{_name}%::xDistance} to {_xDistance}
+    set {KIg::schematic::%{_name}%::yDistance} to {_yDistance}
+    set {KIg::schematic::%{_name}%::zDistance} to {_zDistance}
+
+#loads in respect to northwest bottom corner
+#!KIloadSchematic("roadroller", player's location)
+function KIloadSchematic(name: string, pos: location):
+    set {_x1} to x-coordinate of {_pos}
+    set {_y1} to y-coordinate of {_pos}
+    set {_z1} to z-coordinate of {_pos}
+    set {_world} to world of {_pos}
+    set {_xDistance} to {KIg::schematic::%{_name}%::xDistance}
+    set {_yDistance} to {KIg::schematic::%{_name}%::yDistance}
+    set {_zDistance} to {KIg::schematic::%{_name}%::zDistance}
+    loop {_xDistance} times:
+        loop {_yDistance} times:
+            loop {_zDistance} times:
+                set {_x3} to {_x1} + loop-value-1 - 1
+                set {_y3} to {_y1} + loop-value-2 - 1
+                set {_z3} to {_z1} + loop-value-3 - 1
+                set block at location {_x3}, {_y3}, {_z3} in {_world} to {KIg::schematic::%{_name}%::blocks::%loop-value-1%::%loop-value-2%::%loop-value-3%}
+
+function KIclearSchematic(name: string, pos: location):
+    set {_x1} to x-coordinate of {_pos}
+    set {_y1} to y-coordinate of {_pos}
+    set {_z1} to z-coordinate of {_pos}
+    set {_world} to world of {_pos}
+    set {_xDistance} to {KIg::schematic::%{_name}%::xDistance}
+    set {_yDistance} to {KIg::schematic::%{_name}%::yDistance}
+    set {_zDistance} to {KIg::schematic::%{_name}%::zDistance}
+    loop {_xDistance} times:
+        loop {_yDistance} times:
+            loop {_zDistance} times:
+                set {_x3} to {_x1} + loop-value-1 - 1
+                set {_y3} to {_y1} + loop-value-2 - 1
+                set {_z3} to {_z1} + loop-value-3 - 1
+                set block at location {_x3}, {_y3}, {_z3} in {_world} to air
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Block Break
+function KIblockBreak(vic: player, time: number):
+    set {_u} to {_vic}'s uuid
+    set {KI::%{_u}%::blockBreak} to true
+    remove shield from {_vic}'s inventory
+    play sound "item.shield.break" to all players in radius 20 of {_vic}
+    KIfreeze({_vic}, {_time})
+    wait "%{_time}% seconds" parsed as timespan
+    delete {KI::%{_u}%::blockBreak}
+    set {_vic}'s offhand tool to shield
+
+on place:
+    if {KIg::abilities} = true:
+        set {_u} to player's uuid
+        if {KI::%{_u}%::blockBreak} = true:
+            cancel event
+
+#on damage:
+    #if {KIg::abilities} = true:
+        #set {_u} to attacker's uuid
+        #if {KI::%{_u}%::blockBreak} = true:
+            #cancel event
+
+on join:
+    set {_u} to player's uuid
+    delete {KI::%{_u}%::blockBreak}
+
+
+#@@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ @@@@@@@@@@ Misc. Functions
+function KInearestEntity(loc: location) :: entity:
+    set {_nearest} to first element of all entities in world of {_loc}
+    loop all entities in world of {_loc}:
+        if distance between loop-entity and {_loc} is less than distance between {_loc} and {_nearest}:
+            set {_nearest} to loop-entity
+    return {_nearest}
+
+function KInearestTargetPlayer(notTarget: player, loc: location) :: player:
+    set {_nearest} to first element of all players in world of {_loc}
+    loop all players in world of {_loc}:
+        if loop-player != {_notTarget}:
+            if distance between loop-player and {_loc} is less than distance between {_loc} and {_nearest}:
+                set {_nearest} to loop-player
+    return {_nearest}
+
+function KInearestTargetPlayerWithinRange(notTarget: player, loc: location, range: integer) :: player:
+    set {_players::*} to all players within {_range} blocks of {_loc}
+    set {_nearest} to {_players::1}
+    if {_nearest} = {_notTarget}:
+        set {_nearest} to {_players::2}
+    loop all players in world of {_loc}:
+        if loop-player != {_notTarget}:
+            if distance between loop-player and {_loc} is less than distance between {_loc} and {_nearest}:
+                set {_nearest} to loop-player
+    if {_nearest}'s gamemode is not survival:
+        delete {_nearest}
+    return {_nearest}
+
+function KIfreeze(p: player, time: number): 
+    set {_ticks} to {_time} * 20.0
+    set {_ticks} to "%{_ticks}%" parsed as integer
+    loop {_ticks} times:
+        teleport {_p} to {_p}
+        wait 1 tick
+
+function KIbleed(vic: player, damage: number, numTicks: integer):
+    loop {_numTicks} times:
+        wait 10 ticks
+        damage {_vic} by {_damage}
+
+function KIcreateLifespan(entity: entity, lifeSpan: integer):
+    wait "%{_lifeSpan}% seconds" parsed as timespan
+    kill {_entity}
